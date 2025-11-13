@@ -1687,6 +1687,794 @@ describe('TwentyCRMServer', () => {
     });
   });
 
+  describe('TaskTarget Operations', () => {
+    describe('createTaskTarget', () => {
+      it('should create a task target linking to a person', async () => {
+        const mockResponse = {
+          data: {
+            createTaskTarget: {
+              id: 'target-123',
+              taskId: 'task-123',
+              personId: 'person-123',
+              companyId: null,
+              opportunityId: null,
+              createdAt: '2024-01-01T00:00:00Z',
+              updatedAt: null
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.createTaskTarget({
+          taskId: 'task-123',
+          personId: 'person-123'
+        });
+
+        expect(result.content[0].text).toContain('Linked task to person');
+        expect(result.content[0].text).toContain('person-123');
+      });
+
+      it('should create a task target linking to a company', async () => {
+        const mockResponse = {
+          data: {
+            createTaskTarget: {
+              id: 'target-124',
+              taskId: 'task-123',
+              personId: null,
+              companyId: 'company-123',
+              opportunityId: null,
+              createdAt: '2024-01-01T00:00:00Z',
+              updatedAt: null
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.createTaskTarget({
+          taskId: 'task-123',
+          companyId: 'company-123'
+        });
+
+        expect(result.content[0].text).toContain('Linked task to company');
+      });
+
+      it('should throw error when no target is provided', async () => {
+        await expect(
+          server.createTaskTarget({
+            taskId: 'task-123'
+          })
+        ).rejects.toThrow('At least one target');
+      });
+    });
+
+    describe('listTaskTargets', () => {
+      it('should list task targets for a specific task', async () => {
+        const mockResponse = {
+          data: {
+            taskTargets: {
+              edges: [
+                {
+                  node: {
+                    id: 'target-123',
+                    taskId: 'task-123',
+                    personId: 'person-123',
+                    companyId: null,
+                    opportunityId: null,
+                    createdAt: '2024-01-01T00:00:00Z',
+                    updatedAt: null
+                  }
+                }
+              ],
+              pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false
+              }
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.listTaskTargets({ taskId: 'task-123' });
+
+        expect(result.content[0].text).toContain('Found 1 task target');
+      });
+    });
+
+    describe('deleteTaskTarget', () => {
+      it('should delete a task target', async () => {
+        const mockResponse = {
+          data: {
+            deleteTaskTarget: {
+              id: 'target-123'
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.deleteTaskTarget('target-123');
+
+        expect(result.content[0].text).toContain('Deleted task target');
+        expect(result.content[0].text).toContain('target-123');
+      });
+    });
+  });
+
+  describe('NoteTarget Operations', () => {
+    describe('createNoteTarget', () => {
+      it('should create a note target linking to a person', async () => {
+        const mockResponse = {
+          data: {
+            createNoteTarget: {
+              id: 'target-125',
+              noteId: 'note-123',
+              personId: 'person-123',
+              companyId: null,
+              opportunityId: null,
+              createdAt: '2024-01-01T00:00:00Z',
+              updatedAt: null
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.createNoteTarget({
+          noteId: 'note-123',
+          personId: 'person-123'
+        });
+
+        expect(result.content[0].text).toContain('Linked note to person');
+        expect(result.content[0].text).toContain('person-123');
+      });
+
+      it('should create a note target linking to an opportunity', async () => {
+        const mockResponse = {
+          data: {
+            createNoteTarget: {
+              id: 'target-126',
+              noteId: 'note-123',
+              personId: null,
+              companyId: null,
+              opportunityId: 'opp-123',
+              createdAt: '2024-01-01T00:00:00Z',
+              updatedAt: null
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.createNoteTarget({
+          noteId: 'note-123',
+          opportunityId: 'opp-123'
+        });
+
+        expect(result.content[0].text).toContain('Linked note to opportunity');
+      });
+
+      it('should throw error when no target is provided', async () => {
+        await expect(
+          server.createNoteTarget({
+            noteId: 'note-123'
+          })
+        ).rejects.toThrow('At least one target');
+      });
+    });
+
+    describe('listNoteTargets', () => {
+      it('should list note targets for a specific company', async () => {
+        const mockResponse = {
+          data: {
+            noteTargets: {
+              edges: [
+                {
+                  node: {
+                    id: 'target-127',
+                    noteId: 'note-123',
+                    personId: null,
+                    companyId: 'company-123',
+                    opportunityId: null,
+                    createdAt: '2024-01-01T00:00:00Z',
+                    updatedAt: null
+                  }
+                },
+                {
+                  node: {
+                    id: 'target-128',
+                    noteId: 'note-124',
+                    personId: null,
+                    companyId: 'company-123',
+                    opportunityId: null,
+                    createdAt: '2024-01-02T00:00:00Z',
+                    updatedAt: null
+                  }
+                }
+              ],
+              pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false
+              }
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.listNoteTargets({ companyId: 'company-123' });
+
+        expect(result.content[0].text).toContain('Found 2 note target');
+      });
+    });
+
+    describe('deleteNoteTarget', () => {
+      it('should delete a note target', async () => {
+        const mockResponse = {
+          data: {
+            deleteNoteTarget: {
+              id: 'target-129'
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.deleteNoteTarget('target-129');
+
+        expect(result.content[0].text).toContain('Deleted note target');
+        expect(result.content[0].text).toContain('target-129');
+      });
+    });
+  });
+
+  describe('Activity Operations', () => {
+    describe('createActivity', () => {
+      it('should create an activity with required fields', async () => {
+        const mockResponse = {
+          data: {
+            createActivity: {
+              id: 'activity-123',
+              title: 'Call with client',
+              body: null,
+              type: 'CALL',
+              occurredAt: null,
+              assigneeId: null,
+              assignee: null,
+              personId: null,
+              companyId: null,
+              opportunityId: null,
+              createdAt: '2024-01-01T00:00:00Z'
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.createActivity({
+          title: 'Call with client',
+          type: 'CALL'
+        });
+
+        expect(result.content[0].text).toContain('Created activity: Call with client (CALL)');
+      });
+
+      it('should create an activity with all fields', async () => {
+        const mockResponse = {
+          data: {
+            createActivity: {
+              id: 'activity-124',
+              title: 'Meeting with prospect',
+              body: 'Discussed pricing and timeline',
+              type: 'MEETING',
+              occurredAt: '2024-01-15T14:00:00Z',
+              assigneeId: 'user-123',
+              assignee: {
+                id: 'user-123',
+                name: { firstName: 'Jane', lastName: 'Smith' }
+              },
+              personId: 'person-123',
+              companyId: 'company-123',
+              opportunityId: 'opp-123',
+              createdAt: '2024-01-01T00:00:00Z'
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.createActivity({
+          title: 'Meeting with prospect',
+          body: 'Discussed pricing and timeline',
+          type: 'MEETING',
+          occurredAt: '2024-01-15T14:00:00Z',
+          assigneeId: 'user-123',
+          personId: 'person-123',
+          companyId: 'company-123',
+          opportunityId: 'opp-123'
+        });
+
+        expect(result.content[0].text).toContain('Created activity: Meeting with prospect (MEETING)');
+        expect(result.content[0].text).toContain('Jane');
+      });
+    });
+
+    describe('getActivity', () => {
+      it('should get an activity by ID', async () => {
+        const mockResponse = {
+          data: {
+            activity: {
+              id: 'activity-123',
+              title: 'Email sent',
+              body: 'Follow-up email',
+              type: 'EMAIL',
+              occurredAt: '2024-01-10T10:00:00Z',
+              assigneeId: null,
+              assignee: null,
+              personId: 'person-123',
+              companyId: null,
+              opportunityId: null,
+              createdAt: '2024-01-01T00:00:00Z',
+              updatedAt: null
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.getActivity('activity-123');
+
+        expect(result.content[0].text).toContain('Activity details');
+        expect(result.content[0].text).toContain('Email sent');
+      });
+    });
+
+    describe('listActivities', () => {
+      it('should list all activities', async () => {
+        const mockResponse = {
+          data: {
+            activities: {
+              edges: [
+                {
+                  node: {
+                    id: 'activity-123',
+                    title: 'Call',
+                    body: null,
+                    type: 'CALL',
+                    occurredAt: null,
+                    assigneeId: null,
+                    assignee: null,
+                    personId: null,
+                    companyId: null,
+                    opportunityId: null,
+                    createdAt: '2024-01-01T00:00:00Z',
+                    updatedAt: null
+                  }
+                },
+                {
+                  node: {
+                    id: 'activity-124',
+                    title: 'Email',
+                    body: null,
+                    type: 'EMAIL',
+                    occurredAt: null,
+                    assigneeId: null,
+                    assignee: null,
+                    personId: null,
+                    companyId: null,
+                    opportunityId: null,
+                    createdAt: '2024-01-02T00:00:00Z',
+                    updatedAt: null
+                  }
+                }
+              ],
+              pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false
+              }
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.listActivities();
+
+        expect(result.content[0].text).toContain('Found 2 activities');
+      });
+
+      it('should list activities filtered by type', async () => {
+        const mockResponse = {
+          data: {
+            activities: {
+              edges: [
+                {
+                  node: {
+                    id: 'activity-125',
+                    title: 'Meeting',
+                    body: 'Quarterly review',
+                    type: 'MEETING',
+                    occurredAt: '2024-01-15T14:00:00Z',
+                    assigneeId: null,
+                    assignee: null,
+                    personId: 'person-123',
+                    companyId: 'company-123',
+                    opportunityId: null,
+                    createdAt: '2024-01-01T00:00:00Z',
+                    updatedAt: null
+                  }
+                }
+              ],
+              pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false
+              }
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.listActivities({ type: 'MEETING' });
+
+        expect(result.content[0].text).toContain('Found 1 activities');
+      });
+
+      it('should list activities filtered by person', async () => {
+        const mockResponse = {
+          data: {
+            activities: {
+              edges: [
+                {
+                  node: {
+                    id: 'activity-126',
+                    title: 'Call',
+                    body: null,
+                    type: 'CALL',
+                    occurredAt: null,
+                    assigneeId: null,
+                    assignee: null,
+                    personId: 'person-123',
+                    companyId: null,
+                    opportunityId: null,
+                    createdAt: '2024-01-03T00:00:00Z',
+                    updatedAt: null
+                  }
+                }
+              ],
+              pageInfo: {
+                hasNextPage: true,
+                hasPreviousPage: false
+              }
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.listActivities({ personId: 'person-123' });
+
+        expect(result.content[0].text).toContain('Found 1 activities');
+        expect(result.content[0].text).toContain('more available');
+      });
+    });
+
+    describe('updateActivity', () => {
+      it('should update activity title', async () => {
+        const mockResponse = {
+          data: {
+            updateActivity: {
+              id: 'activity-123',
+              title: 'Updated meeting title',
+              body: 'Original content',
+              type: 'MEETING',
+              occurredAt: null,
+              assigneeId: null,
+              personId: null,
+              companyId: null,
+              opportunityId: null,
+              updatedAt: '2024-02-01T00:00:00Z'
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.updateActivity({
+          id: 'activity-123',
+          title: 'Updated meeting title'
+        });
+
+        expect(result.content[0].text).toContain('Updated activity');
+        expect(result.content[0].text).toContain('Updated meeting title');
+      });
+
+      it('should update activity body and occurredAt', async () => {
+        const mockResponse = {
+          data: {
+            updateActivity: {
+              id: 'activity-124',
+              title: 'Meeting',
+              body: 'Updated notes from meeting',
+              type: 'MEETING',
+              occurredAt: '2024-01-20T15:00:00Z',
+              assigneeId: null,
+              personId: null,
+              companyId: null,
+              opportunityId: null,
+              updatedAt: '2024-02-01T00:00:00Z'
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.updateActivity({
+          id: 'activity-124',
+          body: 'Updated notes from meeting',
+          occurredAt: '2024-01-20T15:00:00Z'
+        });
+
+        expect(result.content[0].text).toContain('Updated activity');
+      });
+    });
+  });
+
+  describe('Favorite Operations', () => {
+    describe('addFavorite', () => {
+      it('should add a person to favorites', async () => {
+        const mockResponse = {
+          data: {
+            createFavorite: {
+              id: 'fav-123',
+              position: 1,
+              personId: 'person-123',
+              companyId: null,
+              opportunityId: null,
+              workspaceMemberId: 'user-123',
+              createdAt: '2024-01-01T00:00:00Z',
+              updatedAt: null
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.addFavorite({
+          personId: 'person-123'
+        });
+
+        expect(result.content[0].text).toContain('Added person to favorites');
+        expect(result.content[0].text).toContain('person-123');
+      });
+
+      it('should add a company to favorites with position', async () => {
+        const mockResponse = {
+          data: {
+            createFavorite: {
+              id: 'fav-124',
+              position: 5,
+              personId: null,
+              companyId: 'company-123',
+              opportunityId: null,
+              workspaceMemberId: 'user-123',
+              createdAt: '2024-01-01T00:00:00Z',
+              updatedAt: null
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.addFavorite({
+          companyId: 'company-123',
+          position: 5
+        });
+
+        expect(result.content[0].text).toContain('Added company to favorites');
+      });
+
+      it('should throw error when no target is provided', async () => {
+        await expect(
+          server.addFavorite({})
+        ).rejects.toThrow('At least one target');
+      });
+    });
+
+    describe('getFavorite', () => {
+      it('should get a favorite by ID', async () => {
+        const mockResponse = {
+          data: {
+            favorite: {
+              id: 'fav-123',
+              position: 1,
+              personId: 'person-123',
+              companyId: null,
+              opportunityId: null,
+              workspaceMemberId: 'user-123',
+              createdAt: '2024-01-01T00:00:00Z',
+              updatedAt: null
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.getFavorite('fav-123');
+
+        expect(result.content[0].text).toContain('Favorite details');
+        expect(result.content[0].text).toContain('person-123');
+      });
+    });
+
+    describe('listFavorites', () => {
+      it('should list all favorites', async () => {
+        const mockResponse = {
+          data: {
+            favorites: {
+              edges: [
+                {
+                  node: {
+                    id: 'fav-123',
+                    position: 1,
+                    personId: 'person-123',
+                    companyId: null,
+                    opportunityId: null,
+                    workspaceMemberId: 'user-123',
+                    createdAt: '2024-01-01T00:00:00Z',
+                    updatedAt: null
+                  }
+                },
+                {
+                  node: {
+                    id: 'fav-124',
+                    position: 2,
+                    personId: null,
+                    companyId: 'company-123',
+                    opportunityId: null,
+                    workspaceMemberId: 'user-123',
+                    createdAt: '2024-01-02T00:00:00Z',
+                    updatedAt: null
+                  }
+                }
+              ],
+              pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false
+              }
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.listFavorites();
+
+        expect(result.content[0].text).toContain('Found 2 favorite');
+      });
+
+      it('should list favorites filtered by company', async () => {
+        const mockResponse = {
+          data: {
+            favorites: {
+              edges: [
+                {
+                  node: {
+                    id: 'fav-125',
+                    position: 3,
+                    personId: null,
+                    companyId: 'company-123',
+                    opportunityId: null,
+                    workspaceMemberId: 'user-123',
+                    createdAt: '2024-01-03T00:00:00Z',
+                    updatedAt: null
+                  }
+                }
+              ],
+              pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false
+              }
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.listFavorites({ companyId: 'company-123' });
+
+        expect(result.content[0].text).toContain('Found 1 favorite');
+      });
+    });
+
+    describe('removeFavorite', () => {
+      it('should remove a favorite', async () => {
+        const mockResponse = {
+          data: {
+            deleteFavorite: {
+              id: 'fav-123'
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.removeFavorite('fav-123');
+
+        expect(result.content[0].text).toContain('Removed favorite');
+        expect(result.content[0].text).toContain('fav-123');
+      });
+    });
+  });
+
   describe('Error Handling', () => {
     it('should handle tool errors gracefully', async () => {
       mockFetch.mockRejectedValueOnce(new Error('Network error'));

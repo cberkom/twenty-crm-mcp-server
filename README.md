@@ -27,9 +27,12 @@
 - 📊 **Sales Pipeline** - Track opportunities with stages, amounts, and close dates
 - ✅ **Task Management** - Create, assign, and track tasks with statuses and due dates
 - 📝 **Note Operations** - Add and manage notes with rich text support
+- 🔗 **Relationship Linking** - Link tasks and notes to people, companies, and opportunities
+- 📅 **Activity Timeline** - Track all interactions (calls, emails, meetings) with full history
+- ⭐ **Favorites Management** - Quick access to frequently used records
 - ⚡ **Real-time Updates** - Changes sync immediately with your Twenty instance
 - 🛡️ **Type-Safe** - Full TypeScript implementation with comprehensive type definitions
-- 🧪 **Tested** - Comprehensive unit tests with 50+ test cases
+- 🧪 **Tested** - Comprehensive unit tests with 74+ test cases
 - 📖 **Well-Documented** - Comprehensive guides and examples
 
 ## 🎯 What You Can Do
@@ -72,6 +75,30 @@
 "Show me the note with ID note-456"
 "Update the meeting notes with additional information"
 "List all notes about the Enterprise Deal"
+```
+
+**Link Tasks & Notes to Records:**
+```
+"Link task task-123 to person Sarah Johnson"
+"Show all tasks linked to Acme Corp"
+"Link this note to the Enterprise Deal opportunity"
+"Remove the link between task and company"
+```
+
+**Track Activities:**
+```
+"Log a call with TechCo about the new proposal"
+"Create a meeting activity for next Tuesday with Acme Corp"
+"Show all email activities with Sarah Johnson"
+"Update the call activity with meeting notes"
+```
+
+**Manage Favorites:**
+```
+"Add Acme Corp to my favorites"
+"Show all my favorited companies"
+"Add Sarah Johnson to favorites"
+"Remove TechCo from favorites"
 ```
 
 ## 🚀 Installation
@@ -322,6 +349,104 @@ LinkedIn: linkedin.com/in/maxmustermann"
 **List Notes Filters:**
 - `limit` - Number of results (max: 60, default: 20)
 - `searchTerm` - Search by note title
+
+### TaskTarget Operations
+
+| Tool | Description | Required Fields |
+|------|-------------|----------------|
+| `create_task_target` | Link a task to a person/company/opportunity | `taskId` |
+| `list_task_targets` | List task-record links | - |
+| `delete_task_target` | Remove task-record link | `id` |
+
+**TaskTarget Fields:**
+- `taskId` - Task ID to link (required)
+- `personId` - Person ID to link the task to
+- `companyId` - Company ID to link the task to
+- `opportunityId` - Opportunity ID to link the task to
+
+**Note:** At least one target (personId, companyId, or opportunityId) must be provided.
+
+**List TaskTargets Filters:**
+- `taskId` - Filter by task ID (show all entities linked to this task)
+- `personId` - Filter by person ID (show all tasks linked to this person)
+- `companyId` - Filter by company ID (show all tasks linked to this company)
+- `opportunityId` - Filter by opportunity ID (show all tasks linked to this opportunity)
+- `limit` - Number of results (max: 60, default: 20)
+
+### NoteTarget Operations
+
+| Tool | Description | Required Fields |
+|------|-------------|----------------|
+| `create_note_target` | Link a note to a person/company/opportunity | `noteId` |
+| `list_note_targets` | List note-record links | - |
+| `delete_note_target` | Remove note-record link | `id` |
+
+**NoteTarget Fields:**
+- `noteId` - Note ID to link (required)
+- `personId` - Person ID to link the note to
+- `companyId` - Company ID to link the note to
+- `opportunityId` - Opportunity ID to link the note to
+
+**Note:** At least one target (personId, companyId, or opportunityId) must be provided.
+
+**List NoteTargets Filters:**
+- `noteId` - Filter by note ID (show all entities linked to this note)
+- `personId` - Filter by person ID (show all notes linked to this person)
+- `companyId` - Filter by company ID (show all notes linked to this company)
+- `opportunityId` - Filter by opportunity ID (show all notes linked to this opportunity)
+- `limit` - Number of results (max: 60, default: 20)
+
+### Activity Operations
+
+| Tool | Description | Required Fields |
+|------|-------------|----------------|
+| `create_activity` | Log a new activity/interaction | `title`, `type` |
+| `get_activity` | Get activity by ID | `id` |
+| `list_activities` | List/search activities | - |
+| `update_activity` | Update activity info | `id` |
+
+**Activity Fields:**
+- `title` - Activity title (required)
+- `type` - Activity type (required): 'CALL', 'EMAIL', 'MEETING', 'NOTE', 'TASK', 'CUSTOM'
+- `body` - Activity body/description
+- `occurredAt` - When the activity occurred (ISO 8601 format)
+- `assigneeId` - ID of the workspace member assigned to this activity
+- `personId` - Person ID to associate with this activity
+- `companyId` - Company ID to associate with this activity
+- `opportunityId` - Opportunity ID to associate with this activity
+
+**List Activities Filters:**
+- `limit` - Number of results (max: 60, default: 20)
+- `searchTerm` - Search by activity title
+- `type` - Filter by activity type ('CALL', 'EMAIL', 'MEETING', etc.)
+- `personId` - Filter by person ID
+- `companyId` - Filter by company ID
+- `opportunityId` - Filter by opportunity ID
+- `assigneeId` - Filter by assignee ID
+
+### Favorite Operations
+
+| Tool | Description | Required Fields |
+|------|-------------|----------------|
+| `add_favorite` | Add a record to favorites | - |
+| `get_favorite` | Get favorite by ID | `id` |
+| `list_favorites` | List all favorites | - |
+| `remove_favorite` | Remove a record from favorites | `id` |
+
+**Favorite Fields:**
+- `personId` - Person ID to add to favorites
+- `companyId` - Company ID to add to favorites
+- `opportunityId` - Opportunity ID to add to favorites
+- `position` - Position in favorites list (optional)
+
+**Note:** At least one target (personId, companyId, or opportunityId) must be provided for `add_favorite`.
+
+**List Favorites Filters:**
+- `limit` - Number of results (max: 60, default: 20)
+- `personId` - Filter by person ID
+- `companyId` - Filter by company ID
+- `opportunityId` - Filter by opportunity ID
+- `workspaceMemberId` - Filter by workspace member ID
 
 ## 📋 Understanding Composite Fields
 
