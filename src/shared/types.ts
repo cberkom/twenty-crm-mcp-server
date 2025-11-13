@@ -98,21 +98,25 @@ export interface NoteTarget {
   updatedAt?: string;
 }
 
-// Activity - Timeline events and interactions
-export interface Activity {
+// TimelineActivity - Timeline events and interactions
+export interface TimelineActivity {
   id: string;
-  title: string;
-  body?: string;
-  type: string;
-  occurredAt?: string;
-  assigneeId?: string;
-  assignee?: {
-    id: string;
-    name: NameComposite;
-  };
+  name: string;
+  properties?: Record<string, unknown>;
+  happensAt?: string;
+  linkedRecordId?: string;
+  linkedObjectMetadataId?: string;
+  linkedRecordCachedName?: string;
+  workspaceMemberId?: string;
   personId?: string;
   companyId?: string;
   opportunityId?: string;
+  noteId?: string;
+  taskId?: string;
+  workflowId?: string;
+  workflowVersionId?: string;
+  workflowRunId?: string;
+  dashboardId?: string;
   createdAt: string;
   updatedAt?: string;
 }
@@ -124,7 +128,7 @@ export interface Favorite {
   personId?: string;
   companyId?: string;
   opportunityId?: string;
-  workspaceMemberId?: string;
+  forWorkspaceMemberId?: string;
   createdAt: string;
   updatedAt?: string;
 }

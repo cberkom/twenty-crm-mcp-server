@@ -28,7 +28,7 @@
 - ✅ **Task Management** - Create, assign, and track tasks with statuses and due dates
 - 📝 **Note Operations** - Add and manage notes with rich text support
 - 🔗 **Relationship Linking** - Link tasks and notes to people, companies, and opportunities
-- 📅 **Activity Timeline** - Track all interactions (calls, emails, meetings) with full history
+- 📅 **Timeline Activities** - Track all interactions, events, and changes with full history
 - ⭐ **Favorites Management** - Quick access to frequently used records
 - ⚡ **Real-time Updates** - Changes sync immediately with your Twenty instance
 - 🛡️ **Type-Safe** - Full TypeScript implementation with comprehensive type definitions
@@ -85,12 +85,12 @@
 "Remove the link between task and company"
 ```
 
-**Track Activities:**
+**Track Timeline Activities:**
 ```
-"Log a call with TechCo about the new proposal"
-"Create a meeting activity for next Tuesday with Acme Corp"
-"Show all email activities with Sarah Johnson"
-"Update the call activity with meeting notes"
+"Create a timeline activity for a call with TechCo"
+"Log a meeting event for next Tuesday with Acme Corp"
+"Show all timeline activities for Sarah Johnson"
+"Update the timeline activity with meeting notes"
 ```
 
 **Manage Favorites:**
@@ -396,33 +396,38 @@ LinkedIn: linkedin.com/in/maxmustermann"
 - `opportunityId` - Filter by opportunity ID (show all notes linked to this opportunity)
 - `limit` - Number of results (max: 60, default: 20)
 
-### Activity Operations
+### Timeline Activity Operations
 
 | Tool | Description | Required Fields |
 |------|-------------|----------------|
-| `create_activity` | Log a new activity/interaction | `title`, `type` |
-| `get_activity` | Get activity by ID | `id` |
-| `list_activities` | List/search activities | - |
-| `update_activity` | Update activity info | `id` |
+| `create_timeline_activity` | Create a timeline activity event | `name` |
+| `get_timeline_activity` | Get timeline activity by ID | `id` |
+| `list_timeline_activities` | List/search timeline activities | - |
+| `update_timeline_activity` | Update timeline activity info | `id` |
 
-**Activity Fields:**
-- `title` - Activity title (required)
-- `type` - Activity type (required): 'CALL', 'EMAIL', 'MEETING', 'NOTE', 'TASK', 'CUSTOM'
-- `body` - Activity body/description
-- `occurredAt` - When the activity occurred (ISO 8601 format)
-- `assigneeId` - ID of the workspace member assigned to this activity
+**Timeline Activity Fields:**
+- `name` - Activity name/title (required)
+- `properties` - JSON object with activity details (e.g., {type: 'CALL', notes: 'Discussed pricing'})
+- `happensAt` - When the activity occurred (ISO 8601 format)
+- `workspaceMemberId` - ID of the workspace member associated with this activity
 - `personId` - Person ID to associate with this activity
 - `companyId` - Company ID to associate with this activity
 - `opportunityId` - Opportunity ID to associate with this activity
+- `noteId` - Note ID to associate with this activity
+- `taskId` - Task ID to associate with this activity
+- `linkedRecordId` - Linked record ID
+- `linkedObjectMetadataId` - Linked object metadata ID
+- `linkedRecordCachedName` - Cached name of the linked record
 
-**List Activities Filters:**
+**List Timeline Activities Filters:**
 - `limit` - Number of results (max: 60, default: 20)
-- `searchTerm` - Search by activity title
-- `type` - Filter by activity type ('CALL', 'EMAIL', 'MEETING', etc.)
+- `searchTerm` - Search by activity name
 - `personId` - Filter by person ID
 - `companyId` - Filter by company ID
 - `opportunityId` - Filter by opportunity ID
-- `assigneeId` - Filter by assignee ID
+- `workspaceMemberId` - Filter by workspace member ID
+- `noteId` - Filter by note ID
+- `taskId` - Filter by task ID
 
 ### Favorite Operations
 

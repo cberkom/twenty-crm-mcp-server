@@ -1,36 +1,34 @@
 /**
- * MCP tool definitions for Activity operations
+ * MCP tool definitions for TimelineActivity operations
  */
 
 import { Tool } from "@modelcontextprotocol/sdk/types.js";
 
-export const ACTIVITY_TOOLS: Tool[] = [
+export const TIMELINE_ACTIVITY_TOOLS: Tool[] = [
   {
-    name: "create_activity",
-    description: "Log a new activity/interaction in Twenty CRM",
+    name: "create_timeline_activity",
+    description:
+      "Create a timeline activity event in Twenty CRM (tracks events, interactions, and changes)",
     inputSchema: {
       type: "object",
       properties: {
-        title: {
+        name: {
           type: "string",
-          description: "Activity title (required)",
+          description: "Activity name/title (required)",
         },
-        body: {
-          type: "string",
-          description: "Activity body/description",
+        properties: {
+          type: "object",
+          description:
+            "JSON object with activity details (e.g., {type: 'CALL', notes: 'Discussed pricing'})",
         },
-        type: {
+        happensAt: {
           type: "string",
           description:
-            "Activity type (required) - e.g., 'CALL', 'EMAIL', 'MEETING', 'NOTE', 'TASK', 'CUSTOM'",
+            "When the activity occurred (ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ)",
         },
-        occurredAt: {
+        workspaceMemberId: {
           type: "string",
-          description: "When the activity occurred (ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ)",
-        },
-        assigneeId: {
-          type: "string",
-          description: "ID of the workspace member assigned to this activity",
+          description: "ID of the workspace member associated with this activity",
         },
         personId: {
           type: "string",
@@ -44,28 +42,48 @@ export const ACTIVITY_TOOLS: Tool[] = [
           type: "string",
           description: "Opportunity ID to associate with this activity",
         },
+        noteId: {
+          type: "string",
+          description: "Note ID to associate with this activity",
+        },
+        taskId: {
+          type: "string",
+          description: "Task ID to associate with this activity",
+        },
+        linkedRecordId: {
+          type: "string",
+          description: "Linked record ID",
+        },
+        linkedObjectMetadataId: {
+          type: "string",
+          description: "Linked object metadata ID",
+        },
+        linkedRecordCachedName: {
+          type: "string",
+          description: "Cached name of the linked record",
+        },
       },
-      required: ["title", "type"],
+      required: ["name"],
     },
   },
   {
-    name: "get_activity",
-    description: "Get details of a specific activity by ID",
+    name: "get_timeline_activity",
+    description: "Get details of a specific timeline activity by ID",
     inputSchema: {
       type: "object",
       properties: {
         id: {
           type: "string",
-          description: "Activity ID",
+          description: "Timeline activity ID",
         },
       },
       required: ["id"],
     },
   },
   {
-    name: "list_activities",
+    name: "list_timeline_activities",
     description:
-      "List activities (interactions/events) with optional filtering and pagination",
+      "List timeline activities (events and interactions) with optional filtering and pagination",
     inputSchema: {
       type: "object",
       properties: {
@@ -75,60 +93,63 @@ export const ACTIVITY_TOOLS: Tool[] = [
         },
         searchTerm: {
           type: "string",
-          description: "Search by activity title",
-        },
-        type: {
-          type: "string",
-          description: "Filter by activity type (e.g., 'CALL', 'EMAIL', 'MEETING')",
+          description: "Search by activity name",
         },
         personId: {
           type: "string",
-          description: "Filter by person ID - show activities for this person",
+          description:
+            "Filter by person ID - show activities for this person",
         },
         companyId: {
           type: "string",
-          description: "Filter by company ID - show activities for this company",
+          description:
+            "Filter by company ID - show activities for this company",
         },
         opportunityId: {
           type: "string",
-          description: "Filter by opportunity ID - show activities for this opportunity",
+          description:
+            "Filter by opportunity ID - show activities for this opportunity",
         },
-        assigneeId: {
+        workspaceMemberId: {
           type: "string",
-          description: "Filter by assignee ID",
+          description: "Filter by workspace member ID",
+        },
+        noteId: {
+          type: "string",
+          description: "Filter by note ID - show activities for this note",
+        },
+        taskId: {
+          type: "string",
+          description: "Filter by task ID - show activities for this task",
         },
       },
     },
   },
   {
-    name: "update_activity",
-    description: "Update an existing activity's information",
+    name: "update_timeline_activity",
+    description: "Update an existing timeline activity's information",
     inputSchema: {
       type: "object",
       properties: {
         id: {
           type: "string",
-          description: "Activity ID (required)",
+          description: "Timeline activity ID (required)",
         },
-        title: {
+        name: {
           type: "string",
-          description: "Activity title",
+          description: "Activity name/title",
         },
-        body: {
-          type: "string",
-          description: "Activity body/description",
+        properties: {
+          type: "object",
+          description: "JSON object with activity details",
         },
-        type: {
-          type: "string",
-          description: "Activity type",
-        },
-        occurredAt: {
+        happensAt: {
           type: "string",
           description: "When the activity occurred (ISO 8601 format)",
         },
-        assigneeId: {
+        workspaceMemberId: {
           type: "string",
-          description: "ID of the workspace member assigned to this activity",
+          description: "ID of the workspace member associated with this activity",
         },
         personId: {
           type: "string",
@@ -142,8 +163,31 @@ export const ACTIVITY_TOOLS: Tool[] = [
           type: "string",
           description: "Opportunity ID to associate with this activity",
         },
+        noteId: {
+          type: "string",
+          description: "Note ID to associate with this activity",
+        },
+        taskId: {
+          type: "string",
+          description: "Task ID to associate with this activity",
+        },
+        linkedRecordId: {
+          type: "string",
+          description: "Linked record ID",
+        },
+        linkedObjectMetadataId: {
+          type: "string",
+          description: "Linked object metadata ID",
+        },
+        linkedRecordCachedName: {
+          type: "string",
+          description: "Cached name of the linked record",
+        },
       },
       required: ["id"],
     },
   },
 ];
+
+// Keep the old export name for backward compatibility in index.ts
+export const ACTIVITY_TOOLS = TIMELINE_ACTIVITY_TOOLS;

@@ -1,77 +1,80 @@
 /**
- * GraphQL queries and mutations for Activity operations
+ * GraphQL queries and mutations for TimelineActivity operations
  */
 
-export const CREATE_ACTIVITY_MUTATION = `
-  mutation CreateActivity($input: ActivityCreateInput!) {
-    createActivity(data: $input) {
+export const CREATE_TIMELINE_ACTIVITY_MUTATION = `
+  mutation CreateTimelineActivity($input: TimelineActivityCreateInput!) {
+    createTimelineActivity(data: $input) {
       id
-      title
-      body
-      type
-      occurredAt
-      assigneeId
-      assignee {
-        id
-        name {
-          firstName
-          lastName
-        }
-      }
+      name
+      properties
+      happensAt
+      linkedRecordId
+      linkedObjectMetadataId
+      linkedRecordCachedName
+      workspaceMemberId
       personId
       companyId
       opportunityId
+      noteId
+      taskId
+      workflowId
+      workflowVersionId
+      workflowRunId
+      dashboardId
       createdAt
     }
   }
 `;
 
-export const GET_ACTIVITY_QUERY = `
-  query GetActivity($id: UUID!) {
-    activity(filter: { id: { eq: $id } }) {
+export const GET_TIMELINE_ACTIVITY_QUERY = `
+  query GetTimelineActivity($id: UUID!) {
+    timelineActivity(filter: { id: { eq: $id } }) {
       id
-      title
-      body
-      type
-      occurredAt
-      assigneeId
-      assignee {
-        id
-        name {
-          firstName
-          lastName
-        }
-      }
+      name
+      properties
+      happensAt
+      linkedRecordId
+      linkedObjectMetadataId
+      linkedRecordCachedName
+      workspaceMemberId
       personId
       companyId
       opportunityId
+      noteId
+      taskId
+      workflowId
+      workflowVersionId
+      workflowRunId
+      dashboardId
       createdAt
       updatedAt
     }
   }
 `;
 
-export const LIST_ACTIVITIES_QUERY = `
-  query ListActivities($filter: ActivityFilterInput, $limit: Int) {
-    activities(filter: $filter, first: $limit) {
+export const LIST_TIMELINE_ACTIVITIES_QUERY = `
+  query ListTimelineActivities($filter: TimelineActivityFilterInput, $limit: Int) {
+    timelineActivities(filter: $filter, first: $limit) {
       edges {
         node {
           id
-          title
-          body
-          type
-          occurredAt
-          assigneeId
-          assignee {
-            id
-            name {
-              firstName
-              lastName
-            }
-          }
+          name
+          properties
+          happensAt
+          linkedRecordId
+          linkedObjectMetadataId
+          linkedRecordCachedName
+          workspaceMemberId
           personId
           companyId
           opportunityId
+          noteId
+          taskId
+          workflowId
+          workflowVersionId
+          workflowRunId
+          dashboardId
           createdAt
           updatedAt
         }
@@ -84,18 +87,26 @@ export const LIST_ACTIVITIES_QUERY = `
   }
 `;
 
-export const UPDATE_ACTIVITY_MUTATION = `
-  mutation UpdateActivity($id: UUID!, $input: ActivityUpdateInput!) {
-    updateActivity(id: $id, data: $input) {
+export const UPDATE_TIMELINE_ACTIVITY_MUTATION = `
+  mutation UpdateTimelineActivity($id: UUID!, $input: TimelineActivityUpdateInput!) {
+    updateTimelineActivity(id: $id, data: $input) {
       id
-      title
-      body
-      type
-      occurredAt
-      assigneeId
+      name
+      properties
+      happensAt
+      linkedRecordId
+      linkedObjectMetadataId
+      linkedRecordCachedName
+      workspaceMemberId
       personId
       companyId
       opportunityId
+      noteId
+      taskId
+      workflowId
+      workflowVersionId
+      workflowRunId
+      dashboardId
       updatedAt
     }
   }

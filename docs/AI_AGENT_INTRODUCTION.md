@@ -798,88 +798,99 @@ Result: Note appears on both Sarah's and Acme Corp's records
 
 ---
 
-### Activity Timeline
+### Timeline Activities
 
-#### `mcp__twenty-crm__create_activity`
-**Purpose:** Log interactions and events in the CRM timeline
+#### `mcp__twenty-crm__create_timeline_activity`
+**Purpose:** Create timeline activity events to track interactions, events, and changes in CRM
 
 **Required Parameters:**
-- `title` (string): Activity title
-- `type` (string): Activity type - 'CALL', 'EMAIL', 'MEETING', 'NOTE', 'TASK', 'CUSTOM'
+- `name` (string): Activity name/title
 
 **Optional Parameters:**
-- `body` (string): Activity details/description
-- `occurredAt` (string): When the activity occurred (ISO 8601 format)
-- `assigneeId` (string): Assigned workspace member
+- `properties` (object): JSON object with activity details (e.g., {type: 'CALL', notes: 'Discussed pricing'})
+- `happensAt` (string): When the activity occurred (ISO 8601 format)
+- `workspaceMemberId` (string): Associated workspace member
 - `personId` (string): Related person
 - `companyId` (string): Related company
 - `opportunityId` (string): Related opportunity
-
-**Activity Types:**
-- **CALL**: Phone conversations
-- **EMAIL**: Email communications
-- **MEETING**: In-person or virtual meetings
-- **NOTE**: General notes and observations
-- **TASK**: Task completion records
-- **CUSTOM**: Custom activity types
+- `noteId` (string): Related note
+- `taskId` (string): Related task
+- `linkedRecordId` (string): Linked record ID
+- `linkedObjectMetadataId` (string): Linked object metadata ID
+- `linkedRecordCachedName` (string): Cached name of linked record
 
 **When to Use:**
 - Logging customer interactions
 - Tracking communication history
-- Building complete customer timeline
-- Recording important events
-- Documenting touchpoints
+- Recording system events
+- Building complete event timeline
+- Documenting touchpoints and changes
 
 **Example Workflows:**
 ```
-"Log a call with TechCo about pricing concerns"
-"Record a meeting with Sarah Johnson on November 15th"
-"Create an email activity for the proposal sent to Acme Corp"
-"Log a custom activity for the trade show booth visit"
+"Create a timeline activity for a call with TechCo about pricing"
+"Log a meeting event for Sarah Johnson on November 15th"
+"Record an interaction with the proposal sent to Acme Corp"
+"Track a customer visit to the trade show booth"
+```
+
+**Properties Object Examples:**
+```json
+{
+  "type": "CALL",
+  "duration": "30 minutes",
+  "outcome": "positive"
+}
+
+{
+  "type": "MEETING",
+  "attendees": ["Sarah Johnson", "John Doe"],
+  "topics": ["pricing", "timeline"]
+}
 ```
 
 ---
 
-#### `mcp__twenty-crm__get_activity`
-**Purpose:** Retrieve activity details
+#### `mcp__twenty-crm__get_timeline_activity`
+**Purpose:** Retrieve timeline activity details
 
 **Required Parameters:**
-- `id` (string): Activity ID
+- `id` (string): Timeline activity ID
 
 ---
 
-#### `mcp__twenty-crm__list_activities`
-**Purpose:** Search and filter activity timeline
+#### `mcp__twenty-crm__list_timeline_activities`
+**Purpose:** Search and filter timeline activities
 
 **Optional Parameters:**
 - `limit` (number): Results to return (max 60, default 20)
-- `searchTerm` (string): Search by activity title
-- `type` (string): Filter by activity type
+- `searchTerm` (string): Search by activity name
 - `personId` (string): Filter by person
 - `companyId` (string): Filter by company
 - `opportunityId` (string): Filter by opportunity
-- `assigneeId` (string): Filter by assignee
+- `workspaceMemberId` (string): Filter by workspace member
+- `noteId` (string): Filter by note
+- `taskId` (string): Filter by task
 
 **When to Use:**
-- "Show all calls with Acme Corp"
-- "What meetings did we have last month?"
-- "Find all activities related to Sarah Johnson"
+- "Show all timeline activities for Acme Corp"
+- "What events happened with Sarah Johnson?"
+- "Find all activities related to this opportunity"
 - Building customer interaction history
 - Preparing for follow-ups
 
 ---
 
-#### `mcp__twenty-crm__update_activity`
-**Purpose:** Edit activity details
+#### `mcp__twenty-crm__update_timeline_activity`
+**Purpose:** Edit timeline activity details
 
 **Required Parameters:**
-- `id` (string): Activity ID
+- `id` (string): Timeline activity ID
 
 **Optional Parameters:**
-- `title` (string): Updated title
-- `body` (string): Updated details
-- `type` (string): Updated type
-- `occurredAt` (string): Updated occurrence time
+- `name` (string): Updated name
+- `properties` (object): Updated details
+- `happensAt` (string): Updated occurrence time
 - Other fields as needed
 
 ---

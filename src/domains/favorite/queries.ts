@@ -10,7 +10,7 @@ export const CREATE_FAVORITE_MUTATION = `
       personId
       companyId
       opportunityId
-      workspaceMemberId
+      forWorkspaceMemberId
       createdAt
       updatedAt
     }
@@ -25,7 +25,7 @@ export const GET_FAVORITE_QUERY = `
       personId
       companyId
       opportunityId
-      workspaceMemberId
+      forWorkspaceMemberId
       createdAt
       updatedAt
     }
@@ -42,7 +42,7 @@ export const LIST_FAVORITES_QUERY = `
           personId
           companyId
           opportunityId
-          workspaceMemberId
+          forWorkspaceMemberId
           createdAt
           updatedAt
         }

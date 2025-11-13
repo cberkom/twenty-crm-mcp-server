@@ -90,13 +90,13 @@ import {
 
 import {
   ACTIVITY_TOOLS,
-  createActivity,
-  getActivity,
-  listActivities,
-  updateActivity,
-  CreateActivityInput,
-  UpdateActivityInput,
-  ListActivitiesParams,
+  createTimelineActivity,
+  getTimelineActivity,
+  listTimelineActivities,
+  updateTimelineActivity,
+  CreateTimelineActivityInput,
+  UpdateTimelineActivityInput,
+  ListTimelineActivitiesParams,
 } from "./domains/activity/index.js";
 
 import {
@@ -309,26 +309,26 @@ class TwentyCRMServer {
               (args as unknown as { id: string }).id
             );
 
-          // Activity operations
-          case "create_activity":
-            return await createActivity(
+          // TimelineActivity operations
+          case "create_timeline_activity":
+            return await createTimelineActivity(
               this.client,
-              args as unknown as CreateActivityInput
+              args as unknown as CreateTimelineActivityInput
             );
-          case "get_activity":
-            return await getActivity(
+          case "get_timeline_activity":
+            return await getTimelineActivity(
               this.client,
               (args as unknown as { id: string }).id
             );
-          case "list_activities":
-            return await listActivities(
+          case "list_timeline_activities":
+            return await listTimelineActivities(
               this.client,
-              (args || {}) as unknown as ListActivitiesParams
+              (args || {}) as unknown as ListTimelineActivitiesParams
             );
-          case "update_activity":
-            return await updateActivity(
+          case "update_timeline_activity":
+            return await updateTimelineActivity(
               this.client,
-              args as unknown as UpdateActivityInput
+              args as unknown as UpdateTimelineActivityInput
             );
 
           // Favorite operations
@@ -494,20 +494,20 @@ class TwentyCRMServer {
     return deleteNoteTarget(this.client, id);
   }
 
-  async createActivity(data: CreateActivityInput) {
-    return createActivity(this.client, data);
+  async createTimelineActivity(data: CreateTimelineActivityInput) {
+    return createTimelineActivity(this.client, data);
   }
 
-  async getActivity(id: string) {
-    return getActivity(this.client, id);
+  async getTimelineActivity(id: string) {
+    return getTimelineActivity(this.client, id);
   }
 
-  async listActivities(params: ListActivitiesParams = {}) {
-    return listActivities(this.client, params);
+  async listTimelineActivities(params: ListTimelineActivitiesParams = {}) {
+    return listTimelineActivities(this.client, params);
   }
 
-  async updateActivity(data: UpdateActivityInput) {
-    return updateActivity(this.client, data);
+  async updateTimelineActivity(data: UpdateTimelineActivityInput) {
+    return updateTimelineActivity(this.client, data);
   }
 
   async addFavorite(data: AddFavoriteInput) {

@@ -66,7 +66,7 @@ export const FAVORITE_TOOLS: Tool[] = [
           type: "string",
           description: "Filter by opportunity ID",
         },
-        workspaceMemberId: {
+        forWorkspaceMemberId: {
           type: "string",
           description: "Filter by workspace member ID",
         },

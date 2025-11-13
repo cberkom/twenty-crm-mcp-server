@@ -38,13 +38,13 @@ function transformAddInput(data: AddFavoriteInput): FavoriteGraphQLInput {
 function buildListFilter(
   params: ListFavoritesParams
 ): Record<string, unknown> | null {
-  const { personId, companyId, opportunityId, workspaceMemberId } = params;
+  const { personId, companyId, opportunityId, forWorkspaceMemberId } = params;
   const filter: Record<string, unknown> = {};
 
   if (personId) filter.personId = { eq: personId };
   if (companyId) filter.companyId = { eq: companyId };
   if (opportunityId) filter.opportunityId = { eq: opportunityId };
-  if (workspaceMemberId) filter.workspaceMemberId = { eq: workspaceMemberId };
+  if (forWorkspaceMemberId) filter.forWorkspaceMemberId = { eq: forWorkspaceMemberId };
 
   return Object.keys(filter).length > 0 ? filter : null;
 }

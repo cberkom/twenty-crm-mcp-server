@@ -1,39 +1,49 @@
 /**
- * Activity domain handlers - Using base CRUD handler
+ * TimelineActivity domain handlers - Using base CRUD handler
  */
 
 import { createCRUDHandlers } from "../../shared/base-handler.js";
 import {
-  CREATE_ACTIVITY_MUTATION,
-  GET_ACTIVITY_QUERY,
-  LIST_ACTIVITIES_QUERY,
-  UPDATE_ACTIVITY_MUTATION,
+  CREATE_TIMELINE_ACTIVITY_MUTATION,
+  GET_TIMELINE_ACTIVITY_QUERY,
+  LIST_TIMELINE_ACTIVITIES_QUERY,
+  UPDATE_TIMELINE_ACTIVITY_MUTATION,
 } from "./queries.js";
 import {
-  CreateActivityInput,
-  UpdateActivityInput,
-  ListActivitiesParams,
-  Activity,
-  ActivityGraphQLInput,
+  CreateTimelineActivityInput,
+  UpdateTimelineActivityInput,
+  ListTimelineActivitiesParams,
+  TimelineActivity,
+  TimelineActivityGraphQLInput,
 } from "./types.js";
 
 /**
  * Transform create input to GraphQL format
  */
 function transformCreateInput(
-  data: CreateActivityInput
-): ActivityGraphQLInput {
-  const input: ActivityGraphQLInput = {
-    title: data.title,
-    type: data.type,
+  data: CreateTimelineActivityInput
+): TimelineActivityGraphQLInput {
+  const input: TimelineActivityGraphQLInput = {
+    name: data.name,
   };
 
-  if (data.body) input.body = data.body;
-  if (data.occurredAt) input.occurredAt = data.occurredAt;
-  if (data.assigneeId) input.assigneeId = data.assigneeId;
+  if (data.properties) input.properties = data.properties;
+  if (data.happensAt) input.happensAt = data.happensAt;
+  if (data.linkedRecordId) input.linkedRecordId = data.linkedRecordId;
+  if (data.linkedObjectMetadataId)
+    input.linkedObjectMetadataId = data.linkedObjectMetadataId;
+  if (data.linkedRecordCachedName)
+    input.linkedRecordCachedName = data.linkedRecordCachedName;
+  if (data.workspaceMemberId) input.workspaceMemberId = data.workspaceMemberId;
   if (data.personId) input.personId = data.personId;
   if (data.companyId) input.companyId = data.companyId;
   if (data.opportunityId) input.opportunityId = data.opportunityId;
+  if (data.noteId) input.noteId = data.noteId;
+  if (data.taskId) input.taskId = data.taskId;
+  if (data.workflowId) input.workflowId = data.workflowId;
+  if (data.workflowVersionId) input.workflowVersionId = data.workflowVersionId;
+  if (data.workflowRunId) input.workflowRunId = data.workflowRunId;
+  if (data.dashboardId) input.dashboardId = data.dashboardId;
 
   return input;
 }
@@ -42,20 +52,34 @@ function transformCreateInput(
  * Transform update input to GraphQL format
  */
 function transformUpdateInput(
-  data: UpdateActivityInput
-): Partial<ActivityGraphQLInput> {
+  data: UpdateTimelineActivityInput
+): Partial<TimelineActivityGraphQLInput> {
   const { id, ...updates } = data;
-  const input: Partial<ActivityGraphQLInput> = {};
+  const input: Partial<TimelineActivityGraphQLInput> = {};
 
-  if (updates.title !== undefined) input.title = updates.title;
-  if (updates.body !== undefined) input.body = updates.body;
-  if (updates.type !== undefined) input.type = updates.type;
-  if (updates.occurredAt !== undefined) input.occurredAt = updates.occurredAt;
-  if (updates.assigneeId !== undefined) input.assigneeId = updates.assigneeId;
+  if (updates.name !== undefined) input.name = updates.name;
+  if (updates.properties !== undefined) input.properties = updates.properties;
+  if (updates.happensAt !== undefined) input.happensAt = updates.happensAt;
+  if (updates.linkedRecordId !== undefined)
+    input.linkedRecordId = updates.linkedRecordId;
+  if (updates.linkedObjectMetadataId !== undefined)
+    input.linkedObjectMetadataId = updates.linkedObjectMetadataId;
+  if (updates.linkedRecordCachedName !== undefined)
+    input.linkedRecordCachedName = updates.linkedRecordCachedName;
+  if (updates.workspaceMemberId !== undefined)
+    input.workspaceMemberId = updates.workspaceMemberId;
   if (updates.personId !== undefined) input.personId = updates.personId;
   if (updates.companyId !== undefined) input.companyId = updates.companyId;
   if (updates.opportunityId !== undefined)
     input.opportunityId = updates.opportunityId;
+  if (updates.noteId !== undefined) input.noteId = updates.noteId;
+  if (updates.taskId !== undefined) input.taskId = updates.taskId;
+  if (updates.workflowId !== undefined) input.workflowId = updates.workflowId;
+  if (updates.workflowVersionId !== undefined)
+    input.workflowVersionId = updates.workflowVersionId;
+  if (updates.workflowRunId !== undefined)
+    input.workflowRunId = updates.workflowRunId;
+  if (updates.dashboardId !== undefined) input.dashboardId = updates.dashboardId;
 
   return input;
 }
@@ -64,54 +88,56 @@ function transformUpdateInput(
  * Build filter for list query
  */
 function buildListFilter(
-  params: ListActivitiesParams
+  params: ListTimelineActivitiesParams
 ): Record<string, unknown> | null {
   const {
     searchTerm,
-    type,
     personId,
     companyId,
     opportunityId,
-    assigneeId,
+    workspaceMemberId,
+    noteId,
+    taskId,
   } = params;
   const filter: Record<string, unknown> = {};
 
-  if (searchTerm) filter.title = { ilike: `%${searchTerm}%` };
-  if (type) filter.type = { eq: type };
+  if (searchTerm) filter.name = { ilike: `%${searchTerm}%` };
   if (personId) filter.personId = { eq: personId };
   if (companyId) filter.companyId = { eq: companyId };
   if (opportunityId) filter.opportunityId = { eq: opportunityId };
-  if (assigneeId) filter.assigneeId = { eq: assigneeId };
+  if (workspaceMemberId) filter.workspaceMemberId = { eq: workspaceMemberId };
+  if (noteId) filter.noteId = { eq: noteId };
+  if (taskId) filter.taskId = { eq: taskId };
 
   return Object.keys(filter).length > 0 ? filter : null;
 }
 
 // Create CRUD handlers using base handler
 const handlers = createCRUDHandlers<
-  CreateActivityInput,
-  UpdateActivityInput,
-  Activity,
-  ActivityGraphQLInput,
-  ListActivitiesParams
+  CreateTimelineActivityInput,
+  UpdateTimelineActivityInput,
+  TimelineActivity,
+  TimelineActivityGraphQLInput,
+  ListTimelineActivitiesParams
 >({
-  entityName: "activity",
-  entityNameCapitalized: "Activity",
-  pluralEntityName: "activities",
+  entityName: "timelineActivity",
+  entityNameCapitalized: "TimelineActivity",
+  pluralEntityName: "timelineActivities",
   queries: {
-    create: CREATE_ACTIVITY_MUTATION,
-    get: GET_ACTIVITY_QUERY,
-    list: LIST_ACTIVITIES_QUERY,
-    update: UPDATE_ACTIVITY_MUTATION,
+    create: CREATE_TIMELINE_ACTIVITY_MUTATION,
+    get: GET_TIMELINE_ACTIVITY_QUERY,
+    list: LIST_TIMELINE_ACTIVITIES_QUERY,
+    update: UPDATE_TIMELINE_ACTIVITY_MUTATION,
   },
   transformCreateInput,
   transformUpdateInput,
   buildListFilter,
-  formatCreateSuccess: (activity) =>
-    `✅ Created activity: ${activity.title} (${activity.type})`,
+  formatCreateSuccess: (timelineActivity) =>
+    `✅ Created timeline activity: ${timelineActivity.name}`,
 });
 
 // Export handlers
-export const createActivity = handlers.create;
-export const getActivity = handlers.get;
-export const listActivities = handlers.list;
-export const updateActivity = handlers.update;
+export const createTimelineActivity = handlers.create;
+export const getTimelineActivity = handlers.get;
+export const listTimelineActivities = handlers.list;
+export const updateTimelineActivity = handlers.update;

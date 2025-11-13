@@ -20,7 +20,7 @@ export interface ListFavoritesParams {
   personId?: string;
   companyId?: string;
   opportunityId?: string;
-  workspaceMemberId?: string;
+  forWorkspaceMemberId?: string;
 }
 
 // ======================

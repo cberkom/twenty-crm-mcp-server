@@ -1954,22 +1954,29 @@ describe('TwentyCRMServer', () => {
     });
   });
 
-  describe('Activity Operations', () => {
-    describe('createActivity', () => {
-      it('should create an activity with required fields', async () => {
+  describe('TimelineActivity Operations', () => {
+    describe('createTimelineActivity', () => {
+      it('should create a timeline activity with required fields', async () => {
         const mockResponse = {
           data: {
-            createActivity: {
-              id: 'activity-123',
-              title: 'Call with client',
-              body: null,
-              type: 'CALL',
-              occurredAt: null,
-              assigneeId: null,
-              assignee: null,
+            createTimelineActivity: {
+              id: 'timeline-123',
+              name: 'Call with client',
+              properties: null,
+              happensAt: null,
+              linkedRecordId: null,
+              linkedObjectMetadataId: null,
+              linkedRecordCachedName: null,
+              workspaceMemberId: null,
               personId: null,
               companyId: null,
               opportunityId: null,
+              noteId: null,
+              taskId: null,
+              workflowId: null,
+              workflowVersionId: null,
+              workflowRunId: null,
+              dashboardId: null,
               createdAt: '2024-01-01T00:00:00Z'
             }
           }
@@ -1980,31 +1987,34 @@ describe('TwentyCRMServer', () => {
           json: async () => mockResponse
         });
 
-        const result = await server.createActivity({
-          title: 'Call with client',
-          type: 'CALL'
+        const result = await server.createTimelineActivity({
+          name: 'Call with client'
         });
 
-        expect(result.content[0].text).toContain('Created activity: Call with client (CALL)');
+        expect(result.content[0].text).toContain('Created timeline activity: Call with client');
       });
 
-      it('should create an activity with all fields', async () => {
+      it('should create a timeline activity with all fields', async () => {
         const mockResponse = {
           data: {
-            createActivity: {
-              id: 'activity-124',
-              title: 'Meeting with prospect',
-              body: 'Discussed pricing and timeline',
-              type: 'MEETING',
-              occurredAt: '2024-01-15T14:00:00Z',
-              assigneeId: 'user-123',
-              assignee: {
-                id: 'user-123',
-                name: { firstName: 'Jane', lastName: 'Smith' }
-              },
+            createTimelineActivity: {
+              id: 'timeline-124',
+              name: 'Meeting with prospect',
+              properties: { type: 'MEETING', notes: 'Discussed pricing and timeline' },
+              happensAt: '2024-01-15T14:00:00Z',
+              linkedRecordId: null,
+              linkedObjectMetadataId: null,
+              linkedRecordCachedName: null,
+              workspaceMemberId: 'user-123',
               personId: 'person-123',
               companyId: 'company-123',
               opportunityId: 'opp-123',
+              noteId: null,
+              taskId: null,
+              workflowId: null,
+              workflowVersionId: null,
+              workflowRunId: null,
+              dashboardId: null,
               createdAt: '2024-01-01T00:00:00Z'
             }
           }
@@ -2015,37 +2025,42 @@ describe('TwentyCRMServer', () => {
           json: async () => mockResponse
         });
 
-        const result = await server.createActivity({
-          title: 'Meeting with prospect',
-          body: 'Discussed pricing and timeline',
-          type: 'MEETING',
-          occurredAt: '2024-01-15T14:00:00Z',
-          assigneeId: 'user-123',
+        const result = await server.createTimelineActivity({
+          name: 'Meeting with prospect',
+          properties: { type: 'MEETING', notes: 'Discussed pricing and timeline' },
+          happensAt: '2024-01-15T14:00:00Z',
+          workspaceMemberId: 'user-123',
           personId: 'person-123',
           companyId: 'company-123',
           opportunityId: 'opp-123'
         });
 
-        expect(result.content[0].text).toContain('Created activity: Meeting with prospect (MEETING)');
-        expect(result.content[0].text).toContain('Jane');
+        expect(result.content[0].text).toContain('Created timeline activity: Meeting with prospect');
       });
     });
 
-    describe('getActivity', () => {
-      it('should get an activity by ID', async () => {
+    describe('getTimelineActivity', () => {
+      it('should get a timeline activity by ID', async () => {
         const mockResponse = {
           data: {
-            activity: {
-              id: 'activity-123',
-              title: 'Email sent',
-              body: 'Follow-up email',
-              type: 'EMAIL',
-              occurredAt: '2024-01-10T10:00:00Z',
-              assigneeId: null,
-              assignee: null,
+            timelineActivity: {
+              id: 'timeline-123',
+              name: 'Email sent',
+              properties: { type: 'EMAIL', subject: 'Follow-up' },
+              happensAt: '2024-01-10T10:00:00Z',
+              linkedRecordId: null,
+              linkedObjectMetadataId: null,
+              linkedRecordCachedName: null,
+              workspaceMemberId: null,
               personId: 'person-123',
               companyId: null,
               opportunityId: null,
+              noteId: null,
+              taskId: null,
+              workflowId: null,
+              workflowVersionId: null,
+              workflowRunId: null,
+              dashboardId: null,
               createdAt: '2024-01-01T00:00:00Z',
               updatedAt: null
             }
@@ -2057,47 +2072,61 @@ describe('TwentyCRMServer', () => {
           json: async () => mockResponse
         });
 
-        const result = await server.getActivity('activity-123');
+        const result = await server.getTimelineActivity('timeline-123');
 
-        expect(result.content[0].text).toContain('Activity details');
+        expect(result.content[0].text).toContain('TimelineActivity details');
         expect(result.content[0].text).toContain('Email sent');
       });
     });
 
-    describe('listActivities', () => {
-      it('should list all activities', async () => {
+    describe('listTimelineActivities', () => {
+      it('should list all timeline activities', async () => {
         const mockResponse = {
           data: {
-            activities: {
+            timelineActivities: {
               edges: [
                 {
                   node: {
-                    id: 'activity-123',
-                    title: 'Call',
-                    body: null,
-                    type: 'CALL',
-                    occurredAt: null,
-                    assigneeId: null,
-                    assignee: null,
+                    id: 'timeline-123',
+                    name: 'Call',
+                    properties: null,
+                    happensAt: null,
+                    linkedRecordId: null,
+                    linkedObjectMetadataId: null,
+                    linkedRecordCachedName: null,
+                    workspaceMemberId: null,
                     personId: null,
                     companyId: null,
                     opportunityId: null,
+                    noteId: null,
+                    taskId: null,
+                    workflowId: null,
+                    workflowVersionId: null,
+                    workflowRunId: null,
+                    dashboardId: null,
                     createdAt: '2024-01-01T00:00:00Z',
                     updatedAt: null
                   }
                 },
                 {
                   node: {
-                    id: 'activity-124',
-                    title: 'Email',
-                    body: null,
-                    type: 'EMAIL',
-                    occurredAt: null,
-                    assigneeId: null,
-                    assignee: null,
+                    id: 'timeline-124',
+                    name: 'Email',
+                    properties: null,
+                    happensAt: null,
+                    linkedRecordId: null,
+                    linkedObjectMetadataId: null,
+                    linkedRecordCachedName: null,
+                    workspaceMemberId: null,
                     personId: null,
                     companyId: null,
                     opportunityId: null,
+                    noteId: null,
+                    taskId: null,
+                    workflowId: null,
+                    workflowVersionId: null,
+                    workflowRunId: null,
+                    dashboardId: null,
                     createdAt: '2024-01-02T00:00:00Z',
                     updatedAt: null
                   }
@@ -2116,28 +2145,35 @@ describe('TwentyCRMServer', () => {
           json: async () => mockResponse
         });
 
-        const result = await server.listActivities();
+        const result = await server.listTimelineActivities();
 
-        expect(result.content[0].text).toContain('Found 2 activities');
+        expect(result.content[0].text).toContain('Found 2 timelineActivit');
       });
 
-      it('should list activities filtered by type', async () => {
+      it('should list timeline activities filtered by company', async () => {
         const mockResponse = {
           data: {
-            activities: {
+            timelineActivities: {
               edges: [
                 {
                   node: {
-                    id: 'activity-125',
-                    title: 'Meeting',
-                    body: 'Quarterly review',
-                    type: 'MEETING',
-                    occurredAt: '2024-01-15T14:00:00Z',
-                    assigneeId: null,
-                    assignee: null,
+                    id: 'timeline-125',
+                    name: 'Meeting',
+                    properties: { notes: 'Quarterly review' },
+                    happensAt: '2024-01-15T14:00:00Z',
+                    linkedRecordId: null,
+                    linkedObjectMetadataId: null,
+                    linkedRecordCachedName: null,
+                    workspaceMemberId: null,
                     personId: 'person-123',
                     companyId: 'company-123',
                     opportunityId: null,
+                    noteId: null,
+                    taskId: null,
+                    workflowId: null,
+                    workflowVersionId: null,
+                    workflowRunId: null,
+                    dashboardId: null,
                     createdAt: '2024-01-01T00:00:00Z',
                     updatedAt: null
                   }
@@ -2156,28 +2192,35 @@ describe('TwentyCRMServer', () => {
           json: async () => mockResponse
         });
 
-        const result = await server.listActivities({ type: 'MEETING' });
+        const result = await server.listTimelineActivities({ companyId: 'company-123' });
 
-        expect(result.content[0].text).toContain('Found 1 activities');
+        expect(result.content[0].text).toContain('Found 1 timelineActivit');
       });
 
-      it('should list activities filtered by person', async () => {
+      it('should list timeline activities filtered by person', async () => {
         const mockResponse = {
           data: {
-            activities: {
+            timelineActivities: {
               edges: [
                 {
                   node: {
-                    id: 'activity-126',
-                    title: 'Call',
-                    body: null,
-                    type: 'CALL',
-                    occurredAt: null,
-                    assigneeId: null,
-                    assignee: null,
+                    id: 'timeline-126',
+                    name: 'Call',
+                    properties: null,
+                    happensAt: null,
+                    linkedRecordId: null,
+                    linkedObjectMetadataId: null,
+                    linkedRecordCachedName: null,
+                    workspaceMemberId: null,
                     personId: 'person-123',
                     companyId: null,
                     opportunityId: null,
+                    noteId: null,
+                    taskId: null,
+                    workflowId: null,
+                    workflowVersionId: null,
+                    workflowRunId: null,
+                    dashboardId: null,
                     createdAt: '2024-01-03T00:00:00Z',
                     updatedAt: null
                   }
@@ -2196,27 +2239,35 @@ describe('TwentyCRMServer', () => {
           json: async () => mockResponse
         });
 
-        const result = await server.listActivities({ personId: 'person-123' });
+        const result = await server.listTimelineActivities({ personId: 'person-123' });
 
-        expect(result.content[0].text).toContain('Found 1 activities');
+        expect(result.content[0].text).toContain('Found 1 timelineActivit');
         expect(result.content[0].text).toContain('more available');
       });
     });
 
-    describe('updateActivity', () => {
-      it('should update activity title', async () => {
+    describe('updateTimelineActivity', () => {
+      it('should update timeline activity name', async () => {
         const mockResponse = {
           data: {
-            updateActivity: {
-              id: 'activity-123',
-              title: 'Updated meeting title',
-              body: 'Original content',
-              type: 'MEETING',
-              occurredAt: null,
-              assigneeId: null,
+            updateTimelineActivity: {
+              id: 'timeline-123',
+              name: 'Updated meeting title',
+              properties: { notes: 'Original content' },
+              happensAt: null,
+              linkedRecordId: null,
+              linkedObjectMetadataId: null,
+              linkedRecordCachedName: null,
+              workspaceMemberId: null,
               personId: null,
               companyId: null,
               opportunityId: null,
+              noteId: null,
+              taskId: null,
+              workflowId: null,
+              workflowVersionId: null,
+              workflowRunId: null,
+              dashboardId: null,
               updatedAt: '2024-02-01T00:00:00Z'
             }
           }
@@ -2227,28 +2278,36 @@ describe('TwentyCRMServer', () => {
           json: async () => mockResponse
         });
 
-        const result = await server.updateActivity({
-          id: 'activity-123',
-          title: 'Updated meeting title'
+        const result = await server.updateTimelineActivity({
+          id: 'timeline-123',
+          name: 'Updated meeting title'
         });
 
-        expect(result.content[0].text).toContain('Updated activity');
+        expect(result.content[0].text).toContain('Updated timelineActivity');
         expect(result.content[0].text).toContain('Updated meeting title');
       });
 
-      it('should update activity body and occurredAt', async () => {
+      it('should update timeline activity properties and happensAt', async () => {
         const mockResponse = {
           data: {
-            updateActivity: {
-              id: 'activity-124',
-              title: 'Meeting',
-              body: 'Updated notes from meeting',
-              type: 'MEETING',
-              occurredAt: '2024-01-20T15:00:00Z',
-              assigneeId: null,
+            updateTimelineActivity: {
+              id: 'timeline-124',
+              name: 'Meeting',
+              properties: { notes: 'Updated notes from meeting' },
+              happensAt: '2024-01-20T15:00:00Z',
+              linkedRecordId: null,
+              linkedObjectMetadataId: null,
+              linkedRecordCachedName: null,
+              workspaceMemberId: null,
               personId: null,
               companyId: null,
               opportunityId: null,
+              noteId: null,
+              taskId: null,
+              workflowId: null,
+              workflowVersionId: null,
+              workflowRunId: null,
+              dashboardId: null,
               updatedAt: '2024-02-01T00:00:00Z'
             }
           }
@@ -2259,13 +2318,13 @@ describe('TwentyCRMServer', () => {
           json: async () => mockResponse
         });
 
-        const result = await server.updateActivity({
-          id: 'activity-124',
-          body: 'Updated notes from meeting',
-          occurredAt: '2024-01-20T15:00:00Z'
+        const result = await server.updateTimelineActivity({
+          id: 'timeline-124',
+          properties: { notes: 'Updated notes from meeting' },
+          happensAt: '2024-01-20T15:00:00Z'
         });
 
-        expect(result.content[0].text).toContain('Updated activity');
+        expect(result.content[0].text).toContain('Updated timelineActivity');
       });
     });
   });

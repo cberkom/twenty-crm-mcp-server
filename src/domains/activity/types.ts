@@ -1,71 +1,96 @@
 /**
- * Activity domain type definitions
+ * TimelineActivity domain type definitions
  */
 
-import { Activity } from "../../shared/types.js";
+import { TimelineActivity } from "../../shared/types.js";
 
 // ======================
 // INPUT TYPES
 // ======================
 
-export interface CreateActivityInput {
-  title: string;
-  body?: string;
-  type: string;
-  occurredAt?: string;
-  assigneeId?: string;
+export interface CreateTimelineActivityInput {
+  name: string;
+  properties?: Record<string, unknown>;
+  happensAt?: string;
+  linkedRecordId?: string;
+  linkedObjectMetadataId?: string;
+  linkedRecordCachedName?: string;
+  workspaceMemberId?: string;
   personId?: string;
   companyId?: string;
   opportunityId?: string;
+  noteId?: string;
+  taskId?: string;
+  workflowId?: string;
+  workflowVersionId?: string;
+  workflowRunId?: string;
+  dashboardId?: string;
 }
 
-export interface UpdateActivityInput {
+export interface UpdateTimelineActivityInput {
   id: string;
-  title?: string;
-  body?: string;
-  type?: string;
-  occurredAt?: string;
-  assigneeId?: string;
+  name?: string;
+  properties?: Record<string, unknown>;
+  happensAt?: string;
+  linkedRecordId?: string;
+  linkedObjectMetadataId?: string;
+  linkedRecordCachedName?: string;
+  workspaceMemberId?: string;
   personId?: string;
   companyId?: string;
   opportunityId?: string;
+  noteId?: string;
+  taskId?: string;
+  workflowId?: string;
+  workflowVersionId?: string;
+  workflowRunId?: string;
+  dashboardId?: string;
 }
 
-export interface ListActivitiesParams {
+export interface ListTimelineActivitiesParams {
   limit?: number;
   searchTerm?: string;
-  type?: string;
   personId?: string;
   companyId?: string;
   opportunityId?: string;
-  assigneeId?: string;
+  workspaceMemberId?: string;
+  noteId?: string;
+  taskId?: string;
 }
 
 // ======================
 // GRAPHQL INPUT TYPES
 // ======================
 
-export interface ActivityGraphQLInput {
-  title: string;
-  body?: string;
-  type: string;
-  occurredAt?: string;
-  assigneeId?: string;
+export interface TimelineActivityGraphQLInput {
+  name: string;
+  properties?: Record<string, unknown>;
+  happensAt?: string;
+  linkedRecordId?: string;
+  linkedObjectMetadataId?: string;
+  linkedRecordCachedName?: string;
+  workspaceMemberId?: string;
   personId?: string;
   companyId?: string;
   opportunityId?: string;
+  noteId?: string;
+  taskId?: string;
+  workflowId?: string;
+  workflowVersionId?: string;
+  workflowRunId?: string;
+  dashboardId?: string;
 }
 
 // ======================
 // GRAPHQL RESPONSE TYPES
 // ======================
 
-export interface ActivitiesEdge {
-  node: Activity;
+export interface TimelineActivitiesEdge {
+  node: TimelineActivity;
 }
 
-export interface ActivitiesConnection {
-  edges: ActivitiesEdge[];
+export interface TimelineActivitiesConnection {
+  edges: TimelineActivitiesEdge[];
   pageInfo: {
     hasNextPage: boolean;
     hasPreviousPage: boolean;
@@ -73,4 +98,4 @@ export interface ActivitiesConnection {
 }
 
 // Re-export shared type
-export type { Activity };
+export type { TimelineActivity };
