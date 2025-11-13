@@ -2,7 +2,7 @@
  * Activity domain type definitions
  */
 
-import { Activity, NameComposite } from "../../shared/types.js";
+import { Activity } from "../../shared/types.js";
 
 // ======================
 // INPUT TYPES
