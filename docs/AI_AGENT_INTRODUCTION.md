@@ -672,6 +672,25 @@ You: [List opportunities in MEETING/PROPOSAL stage with old creation dates]
 "Link the pricing proposal task to the Enterprise Deal opportunity"
 ```
 
+**Common Pattern - Creating Task with Relationships:**
+```
+User: "Create a follow-up task for Acme Corp about pricing"
+
+Step 1: Create the task
+→ create_task({ title: "Follow up about pricing" })
+→ Returns: { id: "task-123", ... }
+
+Step 2: Link to company
+→ create_task_target({ taskId: "task-123", companyId: "acme-id" })
+
+Result: Task is now visible on Acme Corp's record
+```
+
+**Why Two Steps:**
+- Tasks can be linked to multiple entities (person + company + opportunity)
+- Allows flexible relationship management
+- Matches Twenty CRM's database structure
+
 ---
 
 #### `mcp__twenty-crm__list_task_targets`
@@ -730,6 +749,26 @@ You: [List opportunities in MEETING/PROPOSAL stage with old creation dates]
 "Associate this research note with Acme Corp"
 "Link the call summary to Sarah Johnson"
 ```
+
+**Common Pattern - Creating Note with Relationships:**
+```
+User: "Add a note about our call with Sarah at Acme Corp"
+
+Step 1: Create the note
+→ create_note({ title: "Call with Sarah", body: "Discussed pricing..." })
+→ Returns: { id: "note-456", ... }
+
+Step 2: Link to relevant entities
+→ create_note_target({ noteId: "note-456", personId: "sarah-id" })
+→ create_note_target({ noteId: "note-456", companyId: "acme-id" })
+
+Result: Note appears on both Sarah's and Acme Corp's records
+```
+
+**Why Two Steps:**
+- Notes can be linked to multiple entities simultaneously
+- Allows adding/removing relationships independently
+- Matches Twenty CRM's database structure
 
 ---
 
