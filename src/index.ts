@@ -67,6 +67,7 @@ import {
   getNote,
   listNotes,
   updateNote,
+  deleteNote,
   CreateNoteInput,
   UpdateNoteInput,
   ListNotesParams,
@@ -290,6 +291,11 @@ class TwentyCRMServer {
             return await updateNote(
               this.client,
               args as unknown as UpdateNoteInput
+            );
+          case "delete_note":
+            return await deleteNote(
+              this.client,
+              (args as unknown as { id: string }).id
             );
 
           // Task Target operations

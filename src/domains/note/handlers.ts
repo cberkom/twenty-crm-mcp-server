@@ -2,13 +2,16 @@
  * Note domain handlers - Using base CRUD handler
  */
 
+import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { createCRUDHandlers } from "../../shared/base-handler.js";
+import { GraphQLClient } from "../../shared/graphql-client.js";
 import { transformBodyV2 } from "../../shared/transformers.js";
 import {
   CREATE_NOTE_MUTATION,
   GET_NOTE_QUERY,
   LIST_NOTES_QUERY,
   UPDATE_NOTE_MUTATION,
+  DELETE_NOTE_MUTATION,
 } from "./queries.js";
 import {
   CreateNoteInput,
@@ -90,3 +93,25 @@ export const createNote = handlers.create;
 export const getNote = handlers.get;
 export const listNotes = handlers.list;
 export const updateNote = handlers.update;
+
+/**
+ * Delete a note
+ */
+export async function deleteNote(
+  client: GraphQLClient,
+  id: string
+): Promise<CallToolResult> {
+  await client.request<{ deleteNote: { id: string } }>(
+    DELETE_NOTE_MUTATION,
+    { id }
+  );
+
+  return {
+    content: [
+      {
+        type: "text",
+        text: `✅ Deleted note: ${id}`,
+      },
+    ],
+  };
+}
