@@ -30,9 +30,10 @@
 - 🔗 **Relationship Linking** - Link tasks and notes to people, companies, and opportunities
 - 📅 **Timeline Activities** - Track all interactions, events, and changes with full history
 - ⭐ **Favorites Management** - Quick access to frequently used records
+- 📎 **Attachment Support** - Upload and manage files linked to any CRM record
 - ⚡ **Real-time Updates** - Changes sync immediately with your Twenty instance
 - 🛡️ **Type-Safe** - Full TypeScript implementation with comprehensive type definitions
-- 🧪 **Tested** - Comprehensive unit tests with 74+ test cases
+- 🧪 **Tested** - Comprehensive unit tests with 86+ test cases
 - 📖 **Well-Documented** - Comprehensive guides and examples
 
 ## 🎯 What You Can Do
@@ -99,6 +100,16 @@
 "Show all my favorited companies"
 "Add Sarah Johnson to favorites"
 "Remove TechCo from favorites"
+```
+
+**Manage Attachments:**
+```
+"Attach the project proposal PDF to task task-123"
+"Upload company-logo.png and link it to Acme Corp"
+"Show all attachments for the Enterprise Deal opportunity"
+"List all IMAGE attachments"
+"Find attachments with 'contract' in the name"
+"Delete attachment att-456"
 ```
 
 ## 🚀 Installation
@@ -452,6 +463,41 @@ LinkedIn: linkedin.com/in/maxmustermann"
 - `companyId` - Filter by company ID
 - `opportunityId` - Filter by opportunity ID
 - `workspaceMemberId` - Filter by workspace member ID
+
+### Attachment Operations
+
+| Tool | Description | Required Fields |
+|------|-------------|----------------|
+| `create_attachment` | Upload/create an attachment and link it to a record | `name`, `fullPath` |
+| `get_attachment` | Get attachment by ID | `id` |
+| `list_attachments` | List/search attachments | - |
+| `delete_attachment` | Delete an attachment | `id` |
+
+**Attachment Fields:**
+- `name` - Attachment name/filename (required)
+- `fullPath` - Full path or URL to the file (required)
+- `fileCategory` - File category: 'ARCHIVE', 'AUDIO', 'IMAGE', 'PRESENTATION', 'SPREADSHEET', 'TEXT_DOCUMENT', 'VIDEO', 'OTHER'
+- `taskId` - Task ID to attach the file to
+- `opportunityId` - Opportunity ID to attach the file to
+- `companyId` - Company ID to attach the file to
+- `personId` - Person ID to attach the file to
+- `workflowId` - Workflow ID to attach the file to
+- `dashboardId` - Dashboard ID to attach the file to
+- `authorId` - Author ID (workspace member who created the attachment)
+
+**Note:** At least one relationship ID (taskId, companyId, personId, opportunityId, workflowId, or dashboardId) must be provided for `create_attachment`.
+
+**List Attachments Filters:**
+- `limit` - Number of results (max: 60, default: 20)
+- `searchTerm` - Search by attachment name
+- `fileCategory` - Filter by file category
+- `taskId` - Filter by task ID (show attachments for this task)
+- `opportunityId` - Filter by opportunity ID (show attachments for this opportunity)
+- `companyId` - Filter by company ID (show attachments for this company)
+- `personId` - Filter by person ID (show attachments for this person)
+- `workflowId` - Filter by workflow ID (show attachments for this workflow)
+- `dashboardId` - Filter by dashboard ID (show attachments for this dashboard)
+- `authorId` - Filter by author ID (workspace member)
 
 ## 📋 Understanding Composite Fields
 

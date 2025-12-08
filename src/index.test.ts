@@ -2534,6 +2534,499 @@ describe('TwentyCRMServer', () => {
     });
   });
 
+  describe('Attachment Operations', () => {
+    describe('createAttachment', () => {
+      it('should create an attachment linked to a task', async () => {
+        const mockResponse = {
+          data: {
+            createAttachment: {
+              id: 'att-123',
+              name: 'project-specs.pdf',
+              fullPath: 'https://storage.example.com/files/project-specs.pdf',
+              type: null,
+              fileCategory: 'TEXT_DOCUMENT',
+              taskId: 'task-456',
+              opportunityId: null,
+              companyId: null,
+              personId: null,
+              workflowId: null,
+              dashboardId: null,
+              authorId: 'user-789',
+              createdBy: {
+                source: 'API'
+              },
+              createdAt: '2024-01-01T00:00:00Z',
+              updatedAt: null
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.createAttachment({
+          name: 'project-specs.pdf',
+          fullPath: 'https://storage.example.com/files/project-specs.pdf',
+          fileCategory: 'TEXT_DOCUMENT',
+          taskId: 'task-456'
+        });
+
+        expect(result.content[0].text).toContain('✅ Created attachment: project-specs.pdf');
+        expect(result.content[0].text).toContain('task (task-456)');
+      });
+
+      it('should create an attachment linked to a company', async () => {
+        const mockResponse = {
+          data: {
+            createAttachment: {
+              id: 'att-124',
+              name: 'company-logo.png',
+              fullPath: 'https://storage.example.com/logos/company-logo.png',
+              type: null,
+              fileCategory: 'IMAGE',
+              taskId: null,
+              opportunityId: null,
+              companyId: 'comp-123',
+              personId: null,
+              workflowId: null,
+              dashboardId: null,
+              authorId: null,
+              createdBy: {
+                source: 'API'
+              },
+              createdAt: '2024-01-01T00:00:00Z',
+              updatedAt: null
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.createAttachment({
+          name: 'company-logo.png',
+          fullPath: 'https://storage.example.com/logos/company-logo.png',
+          fileCategory: 'IMAGE',
+          companyId: 'comp-123'
+        });
+
+        expect(result.content[0].text).toContain('✅ Created attachment: company-logo.png');
+        expect(result.content[0].text).toContain('company (comp-123)');
+      });
+
+      it('should create an attachment with all file categories', async () => {
+        const mockResponse = {
+          data: {
+            createAttachment: {
+              id: 'att-125',
+              name: 'presentation.pptx',
+              fullPath: 'https://storage.example.com/files/presentation.pptx',
+              type: null,
+              fileCategory: 'PRESENTATION',
+              taskId: null,
+              opportunityId: 'opp-789',
+              companyId: null,
+              personId: null,
+              workflowId: null,
+              dashboardId: null,
+              authorId: null,
+              createdBy: {
+                source: 'API'
+              },
+              createdAt: '2024-01-01T00:00:00Z',
+              updatedAt: null
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.createAttachment({
+          name: 'presentation.pptx',
+          fullPath: 'https://storage.example.com/files/presentation.pptx',
+          fileCategory: 'PRESENTATION',
+          opportunityId: 'opp-789'
+        });
+
+        expect(result.content[0].text).toContain('✅ Created attachment: presentation.pptx');
+        expect(result.content[0].text).toContain('opportunity (opp-789)');
+      });
+
+      it('should throw error when no relationship ID is provided', async () => {
+        await expect(
+          server.createAttachment({
+            name: 'orphan.pdf',
+            fullPath: 'https://storage.example.com/orphan.pdf'
+          })
+        ).rejects.toThrow('At least one relationship ID');
+      });
+    });
+
+    describe('getAttachment', () => {
+      it('should retrieve an attachment by ID', async () => {
+        const mockResponse = {
+          data: {
+            attachment: {
+              id: 'att-123',
+              name: 'contract.pdf',
+              fullPath: 'https://storage.example.com/contracts/contract.pdf',
+              type: null,
+              fileCategory: 'TEXT_DOCUMENT',
+              taskId: null,
+              opportunityId: null,
+              companyId: 'comp-456',
+              personId: null,
+              workflowId: null,
+              dashboardId: null,
+              authorId: 'user-789',
+              createdBy: {
+                source: 'API'
+              },
+              createdAt: '2024-01-01T00:00:00Z',
+              updatedAt: '2024-01-02T00:00:00Z',
+              deletedAt: null
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.getAttachment('att-123');
+
+        expect(result.content[0].text).toContain('Attachment details:');
+        expect(result.content[0].text).toContain('contract.pdf');
+      });
+    });
+
+    describe('listAttachments', () => {
+      it('should list attachments without filters', async () => {
+        const mockResponse = {
+          data: {
+            attachments: {
+              edges: [
+                {
+                  node: {
+                    id: 'att-123',
+                    name: 'document1.pdf',
+                    fullPath: 'https://storage.example.com/document1.pdf',
+                    type: null,
+                    fileCategory: 'TEXT_DOCUMENT',
+                    taskId: 'task-456',
+                    opportunityId: null,
+                    companyId: null,
+                    personId: null,
+                    workflowId: null,
+                    dashboardId: null,
+                    authorId: null,
+                    createdBy: {
+                      source: 'API'
+                    },
+                    createdAt: '2024-01-01T00:00:00Z',
+                    updatedAt: null
+                  }
+                },
+                {
+                  node: {
+                    id: 'att-124',
+                    name: 'image.png',
+                    fullPath: 'https://storage.example.com/image.png',
+                    type: null,
+                    fileCategory: 'IMAGE',
+                    taskId: null,
+                    opportunityId: null,
+                    companyId: 'comp-789',
+                    personId: null,
+                    workflowId: null,
+                    dashboardId: null,
+                    authorId: null,
+                    createdBy: {
+                      source: 'API'
+                    },
+                    createdAt: '2024-01-02T00:00:00Z',
+                    updatedAt: null
+                  }
+                }
+              ],
+              pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false
+              }
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.listAttachments({});
+
+        expect(result.content[0].text).toContain('Found 2 attachment(s)');
+      });
+
+      it('should list attachments filtered by taskId', async () => {
+        const mockResponse = {
+          data: {
+            attachments: {
+              edges: [
+                {
+                  node: {
+                    id: 'att-123',
+                    name: 'task-file.pdf',
+                    fullPath: 'https://storage.example.com/task-file.pdf',
+                    type: null,
+                    fileCategory: 'TEXT_DOCUMENT',
+                    taskId: 'task-456',
+                    opportunityId: null,
+                    companyId: null,
+                    personId: null,
+                    workflowId: null,
+                    dashboardId: null,
+                    authorId: null,
+                    createdBy: {
+                      source: 'API'
+                    },
+                    createdAt: '2024-01-01T00:00:00Z',
+                    updatedAt: null
+                  }
+                }
+              ],
+              pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false
+              }
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.listAttachments({ taskId: 'task-456' });
+
+        expect(result.content[0].text).toContain('Found 1 attachment(s)');
+        expect(result.content[0].text).toContain('task-456');
+      });
+
+      it('should list attachments filtered by companyId', async () => {
+        const mockResponse = {
+          data: {
+            attachments: {
+              edges: [
+                {
+                  node: {
+                    id: 'att-124',
+                    name: 'company-doc.pdf',
+                    fullPath: 'https://storage.example.com/company-doc.pdf',
+                    type: null,
+                    fileCategory: 'TEXT_DOCUMENT',
+                    taskId: null,
+                    opportunityId: null,
+                    companyId: 'comp-123',
+                    personId: null,
+                    workflowId: null,
+                    dashboardId: null,
+                    authorId: null,
+                    createdBy: {
+                      source: 'API'
+                    },
+                    createdAt: '2024-01-01T00:00:00Z',
+                    updatedAt: null
+                  }
+                }
+              ],
+              pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false
+              }
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.listAttachments({ companyId: 'comp-123' });
+
+        expect(result.content[0].text).toContain('Found 1 attachment(s)');
+        expect(result.content[0].text).toContain('comp-123');
+      });
+
+      it('should list attachments filtered by fileCategory', async () => {
+        const mockResponse = {
+          data: {
+            attachments: {
+              edges: [
+                {
+                  node: {
+                    id: 'att-125',
+                    name: 'photo.jpg',
+                    fullPath: 'https://storage.example.com/photo.jpg',
+                    type: null,
+                    fileCategory: 'IMAGE',
+                    taskId: null,
+                    opportunityId: null,
+                    companyId: null,
+                    personId: 'person-123',
+                    workflowId: null,
+                    dashboardId: null,
+                    authorId: null,
+                    createdBy: {
+                      source: 'API'
+                    },
+                    createdAt: '2024-01-01T00:00:00Z',
+                    updatedAt: null
+                  }
+                }
+              ],
+              pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false
+              }
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.listAttachments({ fileCategory: 'IMAGE' });
+
+        expect(result.content[0].text).toContain('Found 1 attachment(s)');
+      });
+
+      it('should list attachments with search term', async () => {
+        const mockResponse = {
+          data: {
+            attachments: {
+              edges: [
+                {
+                  node: {
+                    id: 'att-126',
+                    name: 'important-contract.pdf',
+                    fullPath: 'https://storage.example.com/important-contract.pdf',
+                    type: null,
+                    fileCategory: 'TEXT_DOCUMENT',
+                    taskId: null,
+                    opportunityId: null,
+                    companyId: 'comp-456',
+                    personId: null,
+                    workflowId: null,
+                    dashboardId: null,
+                    authorId: null,
+                    createdBy: {
+                      source: 'API'
+                    },
+                    createdAt: '2024-01-01T00:00:00Z',
+                    updatedAt: null
+                  }
+                }
+              ],
+              pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false
+              }
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.listAttachments({ searchTerm: 'contract' });
+
+        expect(result.content[0].text).toContain('Found 1 attachment(s)');
+        expect(result.content[0].text).toContain('important-contract.pdf');
+      });
+
+      it('should list attachments with pagination', async () => {
+        const mockResponse = {
+          data: {
+            attachments: {
+              edges: [
+                {
+                  node: {
+                    id: 'att-127',
+                    name: 'file1.pdf',
+                    fullPath: 'https://storage.example.com/file1.pdf',
+                    type: null,
+                    fileCategory: 'TEXT_DOCUMENT',
+                    taskId: 'task-789',
+                    opportunityId: null,
+                    companyId: null,
+                    personId: null,
+                    workflowId: null,
+                    dashboardId: null,
+                    authorId: null,
+                    createdBy: {
+                      source: 'API'
+                    },
+                    createdAt: '2024-01-01T00:00:00Z',
+                    updatedAt: null
+                  }
+                }
+              ],
+              pageInfo: {
+                hasNextPage: true,
+                hasPreviousPage: false
+              }
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.listAttachments({ limit: 10 });
+
+        expect(result.content[0].text).toContain('Found 1 attachment(s)');
+        expect(result.content[0].text).toContain('(more available)');
+      });
+    });
+
+    describe('deleteAttachment', () => {
+      it('should delete an attachment', async () => {
+        const mockResponse = {
+          data: {
+            deleteAttachment: {
+              id: 'att-123'
+            }
+          }
+        };
+
+        mockFetch.mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockResponse
+        });
+
+        const result = await server.deleteAttachment('att-123');
+
+        expect(result.content[0].text).toContain('✅ Deleted attachment: att-123');
+      });
+    });
+  });
+
   describe('Error Handling', () => {
     it('should handle tool errors gracefully', async () => {
       mockFetch.mockRejectedValueOnce(new Error('Network error'));

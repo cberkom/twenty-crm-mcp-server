@@ -1,12 +1,12 @@
 # Twenty CRM MCP Server - Development Roadmap
 
-**Last Updated:** November 13, 2025
-**Current Version:** 0.5.0
-**Total Tools:** 34 across 8 domains
+**Last Updated:** November 14, 2025
+**Current Version:** 0.6.0
+**Total Tools:** 38 across 10 domains
 
 ---
 
-## 📊 Current State (v0.5.0)
+## 📊 Current State (v0.6.0)
 
 ### Completed Domains
 
@@ -19,17 +19,25 @@
 | **Note** | 4 | ✅ Complete | v0.4.0 |
 | **TaskTarget** | 3 | ✅ Complete | v0.5.0 |
 | **NoteTarget** | 3 | ✅ Complete | v0.5.0 |
-| **Activity** | 4 | ✅ Complete | v0.5.0 |
+| **TimelineActivity** | 4 | ✅ Complete | v0.5.0 |
 | **Favorite** | 4 | ✅ Complete | v0.5.0 |
+| **Attachment** | 4 | ✅ Complete | v0.6.0 |
 
-**Total:** 34 tools
+**Total:** 38 tools
+
+### Recent Patches
+- **v0.5.1** - Excluded dev/ from npm package
+- **v0.5.2** - Fixed lazy initialization for GraphQL client
+- **v0.5.3** - Added execute permissions to published package
+- **v0.5.4** - Fixed symlink handling for npx execution (critical bug fix)
 
 ### Test Coverage
-- 74 passing tests (+25 from v0.4.0)
+- 86 passing tests (+12 from v0.5.0)
 - All CRUD operations covered
 - Relationship linking verified
 - Activity timeline tested
 - Favorites management covered
+- Attachment operations verified
 - Composite type transformations verified
 - Live MCP integration tested
 
@@ -105,13 +113,62 @@ We follow a **natural growth approach**, implementing features in order of:
 
 ---
 
-## 🚀 Version 0.6.0 - Power Features (PLANNED)
+## ✅ Version 0.6.0 - Attachments & File Management (COMPLETED)
+
+**Theme:** Document and file management for CRM records
+
+**Released:** November 14, 2025
+**Actual Effort:** ~3 hours
+**New Tools:** 4 tools delivered
+**Test Coverage:** +12 tests (74 → 86)
+
+### Delivered Features
+
+#### ✅ Attachments & Files - COMPLETED
+**Tools Delivered:** 4 tools
+- ✅ `create_attachment` - Upload/create attachment linked to records
+- ✅ `get_attachment` - Retrieve attachment details
+- ✅ `list_attachments` - List and filter attachments
+- ✅ `delete_attachment` - Remove attachments
+
+**Supported File Categories:**
+- ARCHIVE - Compressed files (.zip, .tar, etc.)
+- AUDIO - Audio files (.mp3, .wav, etc.)
+- IMAGE - Image files (.png, .jpg, etc.)
+- PRESENTATION - Presentations (.pptx, .key, etc.)
+- SPREADSHEET - Spreadsheets (.xlsx, .csv, etc.)
+- TEXT_DOCUMENT - Documents (.pdf, .docx, etc.)
+- VIDEO - Video files (.mp4, .mov, etc.)
+- OTHER - Other file types
+
+**Link Attachments To:**
+- Tasks
+- Opportunities
+- Companies
+- People
+- Workflows
+- Dashboards
+
+**Impact:** Complete file management capability for CRM records. Users can now attach contracts, proposals, images, and other files to any CRM entity.
+
+### Success Metrics
+- ✅ 38 total tools (34 → 38)
+- ✅ Attachment support for all major entities
+- ✅ File category classification
+- ✅ 86 passing tests (74 → 86)
+- ✅ Documentation fully updated
+- ✅ Ready for live integration testing
+
+---
+
+## 🚀 Version 0.7.0 - Workflow Automation (PLANNED)
 
 **Theme:** Automation and advanced functionality
 
+**Status:** Ready to implement - See [V0.6.0_PLAN.md](./V0.6.0_PLAN.md)
 **Target Date:** Q2 2025
 **Estimated Effort:** 10-14 hours
-**New Tools:** 12-16 tools
+**New Tools:** 12-16 tools (Attachments + Workflows)
 
 ### Priority Features
 

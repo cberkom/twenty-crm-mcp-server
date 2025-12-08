@@ -64,4 +64,15 @@ export const NOTE_TOOLS: Tool[] = [
       required: ["id"],
     },
   },
+  {
+    name: "delete_note",
+    description: "Delete a note from Twenty CRM",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "string", description: "Note ID to delete" },
+      },
+      required: ["id"],
+    },
+  },
 ];

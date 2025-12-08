@@ -81,3 +81,11 @@ export const UPDATE_NOTE_MUTATION = `
     }
   }
 `;
+
+export const DELETE_NOTE_MUTATION = `
+  mutation DeleteNote($id: UUID!) {
+    deleteNote(id: $id) {
+      id
+    }
+  }
+`;
