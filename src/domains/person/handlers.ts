@@ -95,11 +95,23 @@ function buildListFilter(params: ListPeopleParams): Record<string, unknown> | nu
   const filter: Record<string, unknown> = {};
 
   if (searchTerm) {
-    filter.or = [
-      { name: { firstName: { ilike: `%${searchTerm}%` } } },
-      { name: { lastName: { ilike: `%${searchTerm}%` } } },
-      { emails: { primaryEmail: { ilike: `%${searchTerm}%` } } },
-    ];
+    const terms = searchTerm.trim().split(/\s+/);
+    if (terms.length === 1) {
+      filter.or = [
+        { name: { firstName: { ilike: `%${terms[0]}%` } } },
+        { name: { lastName: { ilike: `%${terms[0]}%` } } },
+        { emails: { primaryEmail: { ilike: `%${terms[0]}%` } } },
+      ];
+    } else {
+      // Multiple words: each word must match at least one name/email field (AND logic)
+      filter.and = terms.map((term) => ({
+        or: [
+          { name: { firstName: { ilike: `%${term}%` } } },
+          { name: { lastName: { ilike: `%${term}%` } } },
+          { emails: { primaryEmail: { ilike: `%${term}%` } } },
+        ],
+      }));
+    }
   }
   if (companyId) {
     filter.companyId = { eq: companyId };
