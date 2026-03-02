@@ -353,6 +353,7 @@ LinkedIn: linkedin.com/in/maxmustermann"
 | `get_note` | Get note by ID | `id` |
 | `list_notes` | List/search notes | - |
 | `update_note` | Update note info | `id` |
+| `delete_note` | Delete a note | `id` |
 
 **Optional Note Fields:**
 - `body` - Note body/content in markdown format
@@ -791,6 +792,9 @@ Ready to extend this server? Here are some ideas:
 - [x] **Opportunity Tracking** - Sales pipeline management ✅ v0.2.0
 - [x] **Task Management** - Create, assign, and track tasks ✅ v0.4.0
 - [x] **Note Operations** - Add and manage notes ✅ v0.4.0
+- [x] **Relationship Linking** - Link tasks/notes to people, companies, opportunities ✅ v0.5.0
+- [x] **Timeline & Favorites** - Activity tracking and quick access ✅ v0.5.0
+- [x] **Attachments** - File management linked to any record ✅ v0.6.0
 
 ### Planned Features
 
@@ -800,7 +804,6 @@ Ready to extend this server? Here are some ideas:
 - [ ] **Advanced Filters** - Complex query building
 - [ ] **Export/Import** - CSV/JSON data operations
 - [ ] **Analytics** - Query insights and metrics
-- [ ] **Attachments** - File management
 
 ### Want to Contribute?
 

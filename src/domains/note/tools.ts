@@ -16,6 +16,21 @@ export const NOTE_TOOLS: Tool[] = [
           type: "string",
           description: "Note body/content in markdown format",
         },
+        personId: {
+          type: "string",
+          description:
+            "Person ID to auto-link the note to (creates note target automatically)",
+        },
+        companyId: {
+          type: "string",
+          description:
+            "Company ID to auto-link the note to (creates note target automatically)",
+        },
+        opportunityId: {
+          type: "string",
+          description:
+            "Opportunity ID to auto-link the note to (creates note target automatically)",
+        },
       },
       required: ["title"],
     },

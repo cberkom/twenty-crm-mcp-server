@@ -166,4 +166,25 @@ begin_task()
 
 ## Other Future Enhancements
 
+### Comprehensive Feature Requests (December 2024)
+
+See **[FEATURE_REQUESTS_2024-12.md](./FEATURE_REQUESTS_2024-12.md)** for detailed feature requests based on real-world AI agent usage, including:
+
+**Priority 1 (Critical):**
+- Delete operations for core entities (people, companies, opportunities, tasks)
+- Enhanced filtering for list_* operations (combined criteria, date ranges)
+
+**Priority 2 (Important):**
+- Bulk operations (create/update multiple records)
+- Pipeline analytics/summary endpoint
+- Overdue/stale entity queries
+
+**Priority 3 (Nice to Have):**
+- Duplicate detection & merge
+- Workspace member context
+- Activity/change history
+- Custom fields support
+
+---
+
 (Add other enhancement ideas here as they come up)

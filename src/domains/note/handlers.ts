@@ -6,6 +6,7 @@ import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { createCRUDHandlers } from "../../shared/base-handler.js";
 import { GraphQLClient } from "../../shared/graphql-client.js";
 import { transformBodyV2 } from "../../shared/transformers.js";
+import { CREATE_NOTE_TARGET_MUTATION } from "../noteTarget/queries.js";
 import {
   CREATE_NOTE_MUTATION,
   GET_NOTE_QUERY,
@@ -89,10 +90,56 @@ const handlers = createCRUDHandlers<
 });
 
 // Export handlers
-export const createNote = handlers.create;
 export const getNote = handlers.get;
 export const listNotes = handlers.list;
 export const updateNote = handlers.update;
+
+/**
+ * Create a note with optional auto-linking to person/company/opportunity
+ */
+export async function createNote(
+  client: GraphQLClient,
+  data: CreateNoteInput
+): Promise<CallToolResult> {
+  const { personId, companyId, opportunityId, ...noteData } = data;
+
+  // Create the note using base handler
+  const result = await handlers.create(client, noteData as CreateNoteInput);
+
+  // Auto-create targets if relationship IDs provided
+  const hasTargets = personId || companyId || opportunityId;
+  if (hasTargets) {
+    const responseText = result.content[0].type === "text" ? result.content[0].text : "";
+    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      const note = JSON.parse(jsonMatch[0]);
+      const targets: Array<{ noteId: string; personId?: string; companyId?: string; opportunityId?: string }> = [];
+      if (personId) targets.push({ noteId: note.id, personId });
+      if (companyId) targets.push({ noteId: note.id, companyId });
+      if (opportunityId) targets.push({ noteId: note.id, opportunityId });
+
+      const linked: string[] = [];
+      for (const target of targets) {
+        await client.request(CREATE_NOTE_TARGET_MUTATION, { input: target });
+        if (target.personId) linked.push(`person (${target.personId})`);
+        if (target.companyId) linked.push(`company (${target.companyId})`);
+        if (target.opportunityId) linked.push(`opportunity (${target.opportunityId})`);
+      }
+
+      const linkInfo = `\n\n🔗 Auto-linked to: ${linked.join(", ")}`;
+      return {
+        content: [
+          {
+            type: "text",
+            text: responseText + linkInfo,
+          },
+        ],
+      };
+    }
+  }
+
+  return result;
+}
 
 /**
  * Delete a note

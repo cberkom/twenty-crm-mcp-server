@@ -30,6 +30,21 @@ export const TASK_TOOLS: Tool[] = [
           type: "string",
           description: "ID of the workspace member to assign the task to",
         },
+        personId: {
+          type: "string",
+          description:
+            "Person ID to auto-link the task to (creates task target automatically)",
+        },
+        companyId: {
+          type: "string",
+          description:
+            "Company ID to auto-link the task to (creates task target automatically)",
+        },
+        opportunityId: {
+          type: "string",
+          description:
+            "Opportunity ID to auto-link the task to (creates task target automatically)",
+        },
       },
       required: ["title"],
     },
