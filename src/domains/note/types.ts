@@ -11,6 +11,9 @@ import { BodyV2Composite } from "../../shared/types.js";
 export interface CreateNoteInput {
   title: string;
   body?: string;
+  personId?: string;
+  companyId?: string;
+  opportunityId?: string;
 }
 
 export interface UpdateNoteInput {

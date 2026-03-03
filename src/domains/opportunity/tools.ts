@@ -88,7 +88,11 @@ export const OPPORTUNITY_TOOLS: Tool[] = [
         name: { type: "string", description: "Opportunity name" },
         amount: { type: "number", description: "Deal amount" },
         currency: { type: "string", description: "Currency code" },
-        stage: { type: "string", description: "Opportunity stage" },
+        stage: {
+          type: "string",
+          description:
+            "Opportunity stage (e.g., 'NEW', 'SCREENING', 'MEETING', 'PROPOSAL', 'CUSTOMER')",
+        },
         closeDate: {
           type: "string",
           description: "Expected close date (ISO 8601)",

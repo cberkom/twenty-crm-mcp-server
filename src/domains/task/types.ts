@@ -14,6 +14,9 @@ export interface CreateTaskInput {
   status?: "TODO" | "IN_PROGRESS" | "DONE";
   dueAt?: string;
   assigneeId?: string;
+  personId?: string;
+  companyId?: string;
+  opportunityId?: string;
 }
 
 export interface UpdateTaskInput {
