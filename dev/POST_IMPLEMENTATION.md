@@ -86,180 +86,23 @@ Move from "Planned Features" to "Completed Features" (around line 575-580):
 
 ---
 
-### ✅ 2. AI Agent Introduction Guide
-**File:** `/docs/AI_AGENT_INTRODUCTION.md`
+### ✅ 2. AI Agent Documentation (Split Docs)
+**Directory:** `/docs/`
 
-**Updates Required:**
+The AI documentation is split into modular files. Update the relevant file(s):
 
-#### A. Executive Summary
-Update tool count (around line 7):
+| File | Contents | When to Update |
+|------|----------|----------------|
+| `AI_AGENT_INTRODUCTION.md` | Overview, tool count, domain list | New domain or version bump |
+| `AI_TOOLS_REFERENCE.md` | All tool parameters and examples | New/changed tools |
+| `AI_DATA_STRUCTURES.md` | Composite fields, validation rules | New data types |
+| `AI_WORKFLOWS.md` | Workflows and use case examples | New workflows or changed tool interactions |
+| `AI_BEST_PRACTICES.md` | Communication, error handling, tips | New patterns or best practices |
 
-```markdown
-You have **[NEW_COUNT] specialized tools** organized into [N] domains:
-```
-
-#### B. Your Capabilities Section
-Add new domain (around line 130-157):
-
-```markdown
-### [N]. [Feature] Management ([X] tools)
-- Create, read, update, and list [objects]
-- Track [specific capabilities]
-- [Key functionality]
-```
-
-#### C. Available Tools Reference
-Add complete new section after existing domains (around line 647):
-
-```markdown
-### [Feature] Operations
-
-#### `mcp__twenty-crm__create_[feature]`
-**Purpose:** [What this tool does]
-
-**Required Parameters:**
-- `param1` (type): Description
-
-**Optional Parameters:**
-- `param2` (type): Description
-- `param3` (type): Description
-
-**When to Use:**
-- [Use case 1]
-- [Use case 2]
-- [Use case 3]
-- [Use case 4]
-
-**Best Practices:**
-- [Best practice 1]
-- [Best practice 2]
-- [Best practice 3]
-
-**Example:**
-```javascript
-{
-  param1: "value",
-  param2: "value",
-  param3: "value"
-}
-```
-
----
-
-#### `mcp__twenty-crm__get_[feature]`
-**Purpose:** Retrieve [feature] details
-
-**Required Parameters:**
-- `id` (string): [Feature] unique identifier
-
-**When to Use:**
-- [Use case 1]
-- [Use case 2]
-
----
-
-#### `mcp__twenty-crm__list_[features]`
-**Purpose:** Search and filter [features]
-
-**Optional Parameters:**
-- `limit` (number): Results to return (max 60, default 20)
-- `searchTerm` (string): Search by [field]
-- `filter1` (string): Filter by [criteria]
-
-**When to Use:**
-- "[Example query 1]"
-- "[Example query 2]"
-- "[Example query 3]"
-
----
-
-#### `mcp__twenty-crm__update_[feature]`
-**Purpose:** Update [feature] information
-
-**Required Parameters:**
-- `id` (string): [Feature] ID
-
-**Optional Parameters:**
-- All fields from `create_[feature]` (except ID)
-
-**When to Use:**
-- [Use case 1]
-- [Use case 2]
-- [Use case 3]
-```
-
-#### D. Data Structures Section
-If new composite types were added, document them (around line 650-790):
-
-```markdown
-#### [New Composite] Type
-**What you send:**
-```javascript
-{ field: "value" }
-```
-
-**What Twenty stores:**
-```javascript
-{
-  composite: {
-    field: "value",
-    metadata: "additional"
-  }
-}
-```
-```
-
-#### E. Common Workflows Section
-Add workflow examples (around line 823-1018):
-
-```markdown
-### Workflow [N]: [Workflow Name]
-
-**Scenario:** [Business scenario description]
-
-**Your Approach:**
-1. **[Step 1]:**
-   ```
-   User: "[Example request]"
-   You: [Action to take]
-   ```
-
-2. **[Step 2]:**
-   ```
-   [Example interaction]
-   ```
-
-**Complete Flow:**
-```
-tool_1 (params)
-→ tool_2 (params)
-→ tool_3 (params)
-```
-```
-
-#### F. Use Case Examples Section
-Add complete conversation examples (around line 1252-1485):
-
-```markdown
-### Example [N]: [Use Case Title]
-
-**Conversation:**
-```
-User: [User request]
-
-You: [Your response]
-[Tool calls]
-
-[Detailed back-and-forth conversation]
-
-You: [Final summary]
-```
-
-**Tools Used:**
-1. `tool_name` (parameters used)
-2. `tool_name` (parameters used)
-3. `tool_name` (parameters used)
-```
+**Key updates for new domains:**
+- `AI_AGENT_INTRODUCTION.md`: Update tool count and add domain to Quick Reference table
+- `AI_TOOLS_REFERENCE.md`: Add complete tool documentation with parameters and examples
+- `AI_WORKFLOWS.md`: Add relevant workflow examples using the new tools
 
 ---
 
@@ -387,9 +230,9 @@ Before considering documentation complete, verify:
 - [ ] README.md mentions new feature in at least 3 places
 - [ ] README.md has usage examples for new tools
 - [ ] README.md API reference table is updated
-- [ ] AI_AGENT_INTRODUCTION.md has complete tool documentation
-- [ ] AI_AGENT_INTRODUCTION.md has workflow examples
-- [ ] AI_AGENT_INTRODUCTION.md has conversation examples
+- [ ] AI_TOOLS_REFERENCE.md has complete tool documentation
+- [ ] AI_WORKFLOWS.md has workflow examples
+- [ ] AI_BEST_PRACTICES.md is consistent with new features
 - [ ] package.json version is bumped
 - [ ] src/index.ts server version matches package.json
 - [ ] ROADMAP.md reflects completed status

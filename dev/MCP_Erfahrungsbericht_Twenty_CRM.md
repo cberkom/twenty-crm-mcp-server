@@ -15,7 +15,7 @@
 
 ### Probleme
 
-#### 1. Fehlende Enum-Dokumentation bei Opportunity Stages
+#### 1. ~~Fehlende Enum-Dokumentation bei Opportunity Stages~~ ✅ Behoben (v0.6.2)
 **Problem:** Der erste Versuch, die Opportunity auf `WON` zu setzen, scheiterte mit:
 ```
 Value "WON" does not exist in "OpportunityStageEnum" enum.
@@ -42,7 +42,7 @@ Bei vielen Notizen im System ist das extrem ineffizient und erzeugt viele API-Ca
 
 **Verbesserungsvorschlag:** `list_notes` sollte einen `searchTerm`-Parameter unterstützen, der Titel und Body durchsucht.
 
-#### 4. Notiz-Targets erfordern separate API-Calls pro Verknüpfung
+#### 4. ~~Notiz-Targets erfordern separate API-Calls pro Verknüpfung~~ ✅ Behoben (v0.6.2)
 **Problem:** Eine Notiz mit Person UND Company UND Opportunity zu verknüpfen erfordert 3 separate `create_note_target`-Aufrufe. Das ist fehleranfällig und langsam.
 
 **Verbesserungsvorschlag:** `create_note` sollte optionale Parameter `personId`, `companyId`, `opportunityId` direkt akzeptieren, um die Verknüpfungen in einem Schritt zu erstellen.
@@ -74,9 +74,9 @@ Der Jira-MCP-Server (`mcp-atlassian`) wurde ebenfalls getestet:
 
 | Prio | Verbesserung | Aufwand |
 |:---|:---|:---|
-| **P0** | Filter für `list_note_targets` (personId, companyId, opportunityId) | Klein |
-| **P0** | Enum-Werte in allen Tool-Beschreibungen dokumentieren | Klein |
-| **P1** | `create_note` mit direkter Verknüpfung (personId, companyId, opportunityId) | Mittel |
-| **P1** | Volltextsuche in `list_notes` | Mittel |
-| **P2** | Konsistentes Amount-Format in Responses | Klein |
-| **P2** | `expand`-Parameter bei `get_person`/`get_company` für verknüpfte Entitäten | Groß |
+| ~~**P0**~~ | ~~Filter für `list_note_targets` (personId, companyId, opportunityId)~~ | ✅ Bereits implementiert (v0.5.0) |
+| ~~**P0**~~ | ~~Enum-Werte in allen Tool-Beschreibungen dokumentieren~~ | ✅ Behoben in v0.6.2 |
+| ~~**P1**~~ | ~~`create_note` mit direkter Verknüpfung (personId, companyId, opportunityId)~~ | ✅ Implementiert in v0.6.2 |
+| **P1** | Volltextsuche in `list_notes` | Mittel – offen |
+| **P2** | Konsistentes Amount-Format in Responses | Klein – offen |
+| **P2** | `expand`-Parameter bei `get_person`/`get_company` für verknüpfte Entitäten | Groß – offen |

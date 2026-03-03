@@ -9,7 +9,7 @@ Welcome to the Twenty CRM MCP Server development documentation! This folder cont
 ### 🗺️ [ROADMAP.md](./ROADMAP.md)
 **Product roadmap and feature planning**
 
-- Current state (v0.4.0)
+- Current state (v0.6.2)
 - Planned features by version
 - Priority and impact assessments
 - Long-term vision
@@ -320,13 +320,12 @@ npm publish
 
 ## 📊 Project Stats
 
-### Current State (v0.4.0)
+### Current State (v0.6.2)
 
-- **Domains:** 5 (Person, Company, Opportunity, Task, Note)
-- **Tools:** 20 MCP tools
-- **Tests:** 49 passing
+- **Domains:** 10 (Person, Company, Opportunity, Task, Note, TaskTarget, NoteTarget, TimelineActivity, Favorite, Attachment)
+- **Tools:** 39 MCP tools
+- **Tests:** 86 passing
 - **Coverage:** High (90%+)
-- **Lines of Code:** ~1,400 (excluding tests)
 
 ### Growth Trajectory
 
@@ -335,7 +334,9 @@ v0.1.0 →  8 tools
 v0.2.0 → 12 tools
 v0.3.0 → 12 tools (architecture refactor)
 v0.4.0 → 20 tools
-v0.5.0 → 34 tools (planned)
+v0.5.0 → 34 tools (+ Targets, Activities, Favorites)
+v0.6.x → 39 tools (+ Attachments, delete_note, convenience params)
+v0.7.0 → ~47 tools (+ Workflows) [planned]
 v1.0.0 → 100+ tools (vision)
 ```
 

@@ -338,6 +338,9 @@ LinkedIn: linkedin.com/in/maxmustermann"
 - `status` - Task status: 'TODO', 'IN_PROGRESS', 'DONE' (default: 'TODO')
 - `dueAt` - Due date (ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ)
 - `assigneeId` - ID of the workspace member to assign the task to
+- `personId` - Auto-link task to person (creates task target automatically)
+- `companyId` - Auto-link task to company (creates task target automatically)
+- `opportunityId` - Auto-link task to opportunity (creates task target automatically)
 
 **List Tasks Filters:**
 - `limit` - Number of results (max: 60, default: 20)
@@ -357,6 +360,9 @@ LinkedIn: linkedin.com/in/maxmustermann"
 
 **Optional Note Fields:**
 - `body` - Note body/content in markdown format
+- `personId` - Auto-link note to person (creates note target automatically)
+- `companyId` - Auto-link note to company (creates note target automatically)
+- `opportunityId` - Auto-link note to opportunity (creates note target automatically)
 
 **List Notes Filters:**
 - `limit` - Number of results (max: 60, default: 20)

@@ -1,12 +1,12 @@
 # Twenty CRM MCP Server - Development Roadmap
 
-**Last Updated:** November 14, 2025
-**Current Version:** 0.6.0
-**Total Tools:** 38 across 10 domains
+**Last Updated:** March 3, 2026
+**Current Version:** 0.6.2
+**Total Tools:** 39 across 10 domains
 
 ---
 
-## 📊 Current State (v0.6.0)
+## 📊 Current State (v0.6.2)
 
 ### Completed Domains
 
@@ -16,20 +16,22 @@
 | **Company** | 4 | ✅ Complete | v0.1.0 |
 | **Opportunity** | 4 | ✅ Complete | v0.2.0 |
 | **Task** | 4 | ✅ Complete | v0.4.0 |
-| **Note** | 4 | ✅ Complete | v0.4.0 |
+| **Note** | 5 | ✅ Complete | v0.4.0 (delete v0.6.1) |
 | **TaskTarget** | 3 | ✅ Complete | v0.5.0 |
 | **NoteTarget** | 3 | ✅ Complete | v0.5.0 |
 | **TimelineActivity** | 4 | ✅ Complete | v0.5.0 |
 | **Favorite** | 4 | ✅ Complete | v0.5.0 |
 | **Attachment** | 4 | ✅ Complete | v0.6.0 |
 
-**Total:** 38 tools
+**Total:** 39 tools
 
 ### Recent Patches
 - **v0.5.1** - Excluded dev/ from npm package
 - **v0.5.2** - Fixed lazy initialization for GraphQL client
 - **v0.5.3** - Added execute permissions to published package
 - **v0.5.4** - Fixed symlink handling for npx execution (critical bug fix)
+- **v0.6.1** - Fixed BlockNote format for notes, added `delete_note` tool
+- **v0.6.2** - Added convenience parameters for `create_task`/`create_note` (auto-link to person/company/opportunity), fixed enum docs in `update_opportunity`, split AI docs into modular files
 
 ### Test Coverage
 - 86 passing tests (+12 from v0.5.0)
@@ -165,10 +167,9 @@ We follow a **natural growth approach**, implementing features in order of:
 
 **Theme:** Automation and advanced functionality
 
-**Status:** Ready to implement - See [V0.6.0_PLAN.md](./V0.6.0_PLAN.md)
-**Target Date:** Q2 2025
-**Estimated Effort:** 10-14 hours
-**New Tools:** 12-16 tools (Attachments + Workflows)
+**Target Date:** TBD
+**Estimated Effort:** 8-10 hours
+**New Tools:** 8-10 tools
 
 ### Priority Features
 
@@ -177,8 +178,9 @@ We follow a **natural growth approach**, implementing features in order of:
 
 **API Objects:**
 - `workflows` - Automation rules
-- `workflowTriggers` - Event triggers
-- `workflowActions` - Actions to execute
+- `workflowVersions` - Version control for workflows
+- `workflowRuns` - Execution history
+- `workflowAutomatedTriggers` - Trigger conditions
 
 **New Tools:**
 ```
@@ -192,90 +194,15 @@ list_workflow_runs   - View execution history
 get_workflow_run     - Get run details
 ```
 
-#### 2. Attachments & Files ⭐⭐ MEDIUM PRIORITY
-**Effort:** 4-6 hours | **Tools:** 4-6 | **Impact:** Medium
-
-**API Objects:**
-- `attachments` - File attachments
-
-**New Tools:**
-```
-upload_attachment    - Upload file to record
-get_attachment       - Get attachment details
-list_attachments     - List record attachments
-delete_attachment    - Remove attachment
-```
-
----
-
-## 🔮 Version 0.6.0 - Power Features
-
-**Theme:** Automation and advanced functionality
-
-**Target Date:** Q2 2025
-**Estimated Effort:** 10-15 hours
-**New Tools:** 12-16 tools
-
-### Planned Features
-
-#### 1. Workflow Automation ⭐⭐⭐ VERY HIGH IMPACT
-**Effort:** 6-8 hours | **Tools:** 8-10 | **Impact:** Very High
-
-Enable CRM process automation.
-
-**API Objects:**
-- `workflows` - Workflow definitions
-- `workflowVersions` - Version control for workflows
-- `workflowRuns` - Execution history
-- `workflowAutomatedTriggers` - Trigger conditions
-
 **Use Cases:**
 - Automated follow-up sequences
 - Lead qualification routing
 - Onboarding automation
 - Status change notifications
 
-**Why High Impact:**
-- Most requested enterprise feature
-- Differentiator for MCP server
-- Enables complex use cases
-- High ROI for users
-
 ---
 
-#### 2. Attachments & Files ⭐⭐⭐ HIGH PRIORITY
-**Effort:** 4-6 hours | **Tools:** 4-6 | **Impact:** High
-
-File management for CRM records.
-
-**API Object:**
-- `attachments` - Files linked to records
-
-**Use Cases:**
-- Upload contracts to opportunities
-- Attach proposals to companies
-- Store meeting notes as files
-- Manage customer documents
-
-**Technical Challenges:**
-- File upload handling
-- Large file support
-- MIME type handling
-- Storage management
-
----
-
-### V0.6.0 Success Metrics
-
-- ✅ 44-50 total tools
-- ✅ Workflow automation functional
-- ✅ File management working
-- ✅ 80+ passing tests
-- ✅ Performance benchmarks met
-
----
-
-## 📧 Version 0.7.0 - Communication Hub
+## 📧 Version 0.8.0 - Communication Hub
 
 **Theme:** Unified communication and calendar
 
@@ -319,20 +246,18 @@ File management for CRM records.
 
 ---
 
-### V0.7.0 Success Metrics
+### V0.8.0 Success Metrics
 
-- ✅ 60-74 total tools
 - ✅ Communication centralized
 - ✅ Calendar fully integrated
 - ✅ 100+ passing tests
 
 ---
 
-## 🌟 Version 0.8.0 - Enterprise Features
+## 🌟 Version 0.9.0 - Enterprise Features
 
 **Theme:** Team collaboration and advanced features
 
-**Target Date:** Q4 2025
 **Estimated Effort:** 12-18 hours
 **New Tools:** 12-16 tools
 
@@ -376,9 +301,11 @@ v0.2.0 → 12 tools  (+ Opportunities)
 v0.3.0 → 12 tools  (Architecture refactor)
 v0.4.0 → 20 tools  (+ Tasks, Notes)
 v0.5.0 → 34 tools  (+ Targets, Activities, Favorites)
-v0.6.0 → 50 tools  (+ Workflows, Attachments)
-v0.7.0 → 74 tools  (+ Email, Calendar)
-v0.8.0 → 90 tools  (+ Team, Dashboards)
+v0.6.0 → 38 tools  (+ Attachments)
+v0.6.1 → 39 tools  (+ delete_note)
+v0.6.2 → 39 tools  (+ convenience params, doc split)
+v0.7.0 → ~47 tools (+ Workflows) [planned]
+v0.8.0 → ~65 tools (+ Email, Calendar) [planned]
 v1.0.0 → 100+ tools (Complete platform)
 ```
 

@@ -4,11 +4,10 @@ This document tracks ideas and improvements for future versions of the Twenty CR
 
 ---
 
-## UX Enhancement: Convenience Parameters for Task/Note Relationships
+## ~~UX Enhancement: Convenience Parameters for Task/Note Relationships~~ ✅ IMPLEMENTED
 
-**Status:** Documented for future consideration
-**Priority:** Low (current explicit approach works well)
-**Version Target:** v0.6.0 or later
+**Status:** ✅ Implemented in v0.6.2
+**Released:** November 2025
 
 ### Current Implementation ✅
 
