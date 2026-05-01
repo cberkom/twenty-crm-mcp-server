@@ -17,6 +17,10 @@
 
 ---
 
+> **Fork notice:** This is the `@reliantfleet/twenty-crm-mcp-server` fork, published to npm by Reliant. It is based on [KonstiDoll/twenty-crm-mcp-server](https://github.com/KonstiDoll/twenty-crm-mcp-server) and adds workspace member tools (`list_workspace_members`, `get_workspace_member`) plus other changes ahead of upstream. Source: [cberkom/twenty-crm-mcp-server](https://github.com/cberkom/twenty-crm-mcp-server).
+
+---
+
 ## ✨ Features
 
 - 🚀 **GraphQL-Native** - Built on Twenty's GraphQL API for robust, type-safe operations
@@ -142,7 +146,7 @@ The easiest way to use this server is via npx:
      "mcpServers": {
        "twenty-crm": {
          "command": "npx",
-         "args": ["-y", "twenty-crm-mcp-server"],
+         "args": ["-y", "@reliantfleet/twenty-crm-mcp-server"],
          "env": {
            "TWENTY_API_KEY": "your_api_key_here",
            "TWENTY_BASE_URL": "https://api.twenty.com"
@@ -163,7 +167,7 @@ The easiest way to use this server is via npx:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/KonstiDoll/twenty-crm-mcp-server.git
+   git clone https://github.com/cberkom/twenty-crm-mcp-server.git
    cd twenty-crm-mcp-server
    ```
 
@@ -785,7 +789,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - [Twenty Documentation](https://twenty.com/developers)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 - [Claude Desktop](https://claude.ai/desktop)
-- [GitHub Issues](https://github.com/KonstiDoll/twenty-crm-mcp-server/issues)
+- [GitHub Issues](https://github.com/cberkom/twenty-crm-mcp-server/issues)
+- [Upstream project](https://github.com/KonstiDoll/twenty-crm-mcp-server)
 
 ---
 
@@ -824,6 +829,6 @@ Open an issue to discuss, then submit a PR.
 
 ⭐ **Star this repo if you find it useful!**
 
-[Report Bug](https://github.com/KonstiDoll/twenty-crm-mcp-server/issues) · [Request Feature](https://github.com/KonstiDoll/twenty-crm-mcp-server/issues) · [Discussions](https://github.com/KonstiDoll/twenty-crm-mcp-server/discussions)
+[Report Bug](https://github.com/cberkom/twenty-crm-mcp-server/issues) · [Request Feature](https://github.com/cberkom/twenty-crm-mcp-server/issues) · [Discussions](https://github.com/cberkom/twenty-crm-mcp-server/discussions)
 
 </div>

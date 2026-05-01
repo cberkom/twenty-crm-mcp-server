@@ -1,12 +1,20 @@
 {
-  "name": "twenty-crm-mcp-server",
-  "version": "0.6.2",
+  "name": "@reliantfleet/twenty-crm-mcp-server",
+  "version": "0.6.4",
   "description": "A Model Context Protocol (MCP) server for Twenty CRM integration. Enables natural language interactions with your CRM data through Claude and other AI assistants.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
     "twenty-crm-mcp-server": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc",
@@ -40,16 +48,19 @@
     "api",
     "integration"
   ],
-  "author": "Konstantin Doll",
+  "author": "Chris Berkompas",
+  "contributors": [
+    "Konstantin Doll (original author)"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KonstiDoll/twenty-crm-mcp-server.git"
+    "url": "git+https://github.com/cberkom/twenty-crm-mcp-server.git"
   },
   "bugs": {
-    "url": "https://github.com/KonstiDoll/twenty-crm-mcp-server/issues"
+    "url": "https://github.com/cberkom/twenty-crm-mcp-server/issues"
   },
-  "homepage": "https://github.com/KonstiDoll/twenty-crm-mcp-server#readme",
+  "homepage": "https://github.com/cberkom/twenty-crm-mcp-server#readme",
   "devDependencies": {
     "@types/node": "^24.10.0",
     "@vitest/coverage-v8": "^4.0.8",
